@@ -59,3 +59,8 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+
+#Unused Platforms
+android/
+html/
+ios/
