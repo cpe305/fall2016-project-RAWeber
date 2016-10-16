@@ -1,6 +1,7 @@
 language: android # can be 'java' if there is no android build target
 android:
   components:
+  	- tools
     - build-tools-23.0.2
     - android-23
 jdk: oraclejdk8
