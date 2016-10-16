@@ -1,6 +1,5 @@
 package com.rawprogramming.games;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.rawprogramming.games.Towers.Tower;
 
 public class GridSquare {
