@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 import com.rawprogramming.games.GameApp;
+import com.rawprogramming.games.Grid;
 import com.rawprogramming.games.GridSquare;
 
 public class GameScreen implements Screen{
@@ -13,15 +14,8 @@ public class GameScreen implements Screen{
     private final GameApp game;
 
     private OrthographicCamera camera;
-    
-    private GridSquare[][] grid;
-    private int rows;
-    private int cols;
-    
-    private int offsetX;
-    private int offsetY;
-    
-    private Texture tile;
+
+    private Grid grid;
 
     public GameScreen(GameApp game) {
         this.game = game;
@@ -29,19 +23,7 @@ public class GameScreen implements Screen{
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
         
-        tile = game.manager.get("Tile.png", Texture.class);
-        
-        rows = 15;
-        cols = 30;
-        grid = new GridSquare[rows][cols];
-        for(int row = 0; row < rows; row++){
-        	for(int col = 0; col < cols; col++){
-        		grid[row][col] = new GridSquare(col, row, 32);
-        	}
-        }
-        
-        offsetX = 50;
-        offsetY = 200;
+        grid = new Grid(10, 20, 50, (int)camera.viewportHeight - 50, game);
     }
 
 	@Override
@@ -58,12 +40,18 @@ public class GameScreen implements Screen{
         game.batch.setProjectionMatrix(camera.combined);
         
         game.batch.begin();
-        for(int row = 0; row < rows; row++){
-        	for(int col = 0; col < cols; col++){
-        		game.batch.draw(tile, grid[row][col].getX() + offsetX, grid[row][col].getY() + offsetY);
-        	}
-        }
+        grid.render();
         game.batch.end();
+        
+        if(Gdx.input.justTouched()){
+        	Vector3 touchPos = new Vector3();
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(touchPos);
+            if(grid.checkTouch(touchPos.x, touchPos.y)){
+            	GridSquare square = grid.getTouchedSquare(touchPos.x, touchPos.y);
+            	//Place or select tower
+            }
+        }
 	}
 
 	@Override
