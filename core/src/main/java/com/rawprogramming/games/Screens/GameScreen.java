@@ -5,9 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.rawprogramming.games.GameApp;
-import com.rawprogramming.games.Grid;
-import com.rawprogramming.games.GridSquare;
+import com.rawprogramming.games.*;
+import com.rawprogramming.games.Towers.TowerStore;
 
 public class GameScreen implements Screen{
 	
@@ -16,6 +15,7 @@ public class GameScreen implements Screen{
     private OrthographicCamera camera;
 
     private Grid grid;
+    private TowerStore store;
 
     public GameScreen(GameApp game) {
         this.game = game;
@@ -24,6 +24,7 @@ public class GameScreen implements Screen{
         camera.setToOrtho(false, 1280, 720);
         
         grid = new Grid(10, 20, 50, (int)camera.viewportHeight - 50, game);
+        store = new TowerStore(200, 50, 150, game);
     }
 
 	@Override
@@ -41,6 +42,7 @@ public class GameScreen implements Screen{
         
         game.batch.begin();
         grid.render();
+        store.render();
         game.batch.end();
         
         if(Gdx.input.justTouched()){
@@ -49,7 +51,15 @@ public class GameScreen implements Screen{
             camera.unproject(touchPos);
             if(grid.checkTouch(touchPos.x, touchPos.y)){
             	GridSquare square = grid.getTouchedSquare(touchPos.x, touchPos.y);
-            	//Place or select tower
+            	if(store.hasTowerSelected()){
+            		grid.placeTower(square, store.buyTower());
+            	}
+            }
+            if(store.checkTouch(touchPos.x, touchPos.y)){
+            	store.selectTower(touchPos.x, touchPos.y);
+            }
+            else{
+            	store.deselectTower();
             }
         }
 	}
