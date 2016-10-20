@@ -1,6 +1,7 @@
 package com.rawprogramming.games;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.rawprogramming.games.Towers.Tower;
 
 public class Grid {
 	
@@ -41,6 +42,9 @@ public class Grid {
         for(int row = 0; row < rows; row++){
         	for(int col = 0; col < cols; col++){
         		game.batch.draw(tile, grid[row][col].getCoordX(), grid[row][col].getCoordY(), tileLen, tileLen);
+        		if(grid[row][col].hasTower()){
+        			game.batch.draw(game.manager.get("BasicTower.png", Texture.class), grid[row][col].getCoordX(), grid[row][col].getCoordY(), tileLen, tileLen);
+        		}
         	}
         }
     }
@@ -51,14 +55,17 @@ public class Grid {
     
 	
 	public GridSquare getTouchedSquare(float x, float y){
-        for(int row = 0; row < rows; row++){
-        	for(int col = 0; col < cols; col++){
-        		if(grid[row][col].checkTouch(x, y)){
-        			return grid[row][col];
-        		}
-        	}
-        }
-        return null;
+        int gridX = ((int)x - offsetX)/tileLen;
+        int gridY = ((int)y - offsetY)/tileLen;
+        return getSquare(gridY, gridX);
+	}
+	
+	public GridSquare getSquare(int row, int col){
+		return grid[row][col];
+	}
+	
+	public void placeTower(GridSquare square, Tower tower){
+		square.setTower(tower);
 	}
     
     private int getWidth(){

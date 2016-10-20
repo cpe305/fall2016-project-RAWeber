@@ -47,4 +47,12 @@ public class GridSquare {
 	public int getCoordY(){
 		return y * length + offsetY;
 	}
+	
+	public int getX(){
+		return x;
+	}
+	
+	public int getY(){
+		return y;
+	}
 }

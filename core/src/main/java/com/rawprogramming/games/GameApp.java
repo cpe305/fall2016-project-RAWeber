@@ -14,6 +14,7 @@ public class GameApp extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		manager.load("Tile.png", Texture.class);
+		manager.load("BasicTower.png", Texture.class);
 		
 		this.setScreen(new TitleScreen(this));
 	}
