@@ -57,14 +57,14 @@ public class TitleScreen implements Screen {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     camera.update();
-    game.batch.setProjectionMatrix(camera.combined);
+    GameApp.batch.setProjectionMatrix(camera.combined);
 
-    game.batch.begin();
-    font.draw(game.batch, titleText, camera.viewportWidth / 2 - titleWidth / 2,
+    GameApp.batch.begin();
+    font.draw(GameApp.batch, titleText, camera.viewportWidth / 2 - titleWidth / 2,
         camera.viewportHeight / 2 + titleHeight / 2 + 5);
-    font.draw(game.batch, startText, camera.viewportWidth / 2 - startWidth / 2,
+    font.draw(GameApp.batch, startText, camera.viewportWidth / 2 - startWidth / 2,
         camera.viewportHeight / 2 - titleHeight / 2 - 5);
-    game.batch.end();
+    GameApp.batch.end();
 
     if (Gdx.input.isTouched()) {
       game.setScreen(new GameScreen(game));

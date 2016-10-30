@@ -1,6 +1,6 @@
-package com.rawprogramming.games;
+package com.rawprogramming.games.grid;
 
-import com.rawprogramming.games.towers.Tower;
+import com.badlogic.gdx.graphics.Texture;
 
 public class GridSquare {
 
@@ -9,7 +9,8 @@ public class GridSquare {
   int offsetX;
   int offsetY;
   private int length;
-  private Tower tower;
+
+  protected Texture tile;
 
   /**
    * Constructor for GridSquare.
@@ -25,24 +26,14 @@ public class GridSquare {
     this.offsetX = offsetX;
     this.offsetY = offsetY;
     this.length = length;
-    tower = null;
   }
-
-  public boolean checkTouch(float coordX, float coordY) {
-    return (coordX > getCoordX() && coordX < getCoordX() + length)
-        && (coordY > getCoordY() && coordY < getCoordY() + length);
+  
+  public int getCenteredX() {
+    return getCoordX() + length / 2;
   }
-
-  public boolean hasTower() {
-    return tower != null;
-  }
-
-  public Tower getTower() {
-    return tower;
-  }
-
-  public void setTower(Tower tower) {
-    this.tower = tower;
+  
+  public int getCenteredY() {
+    return getCoordY() + length / 2;
   }
 
   public int getLength() {
@@ -63,5 +54,9 @@ public class GridSquare {
 
   public int getRow() {
     return row;
+  }
+
+  public Texture getTile() {
+    return tile;
   }
 }

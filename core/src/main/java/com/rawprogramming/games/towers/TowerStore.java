@@ -1,8 +1,7 @@
 package com.rawprogramming.games.towers;
 
-import com.rawprogramming.games.GameApp;
-import com.rawprogramming.games.Grid;
-import com.rawprogramming.games.GridSquare;
+import com.rawprogramming.games.grid.Grid;
+import com.rawprogramming.games.grid.TowerSquare;
 
 import java.util.ArrayList;
 
@@ -17,17 +16,16 @@ public class TowerStore extends Grid {
    * @param money Amount of money player initially has
    * @param offsetX Offset of towerstore along x axis
    * @param offsetY Offset of towerstore along y axis
-   * @param game Reference to GameApp
    */
-  public TowerStore(int money, int offsetX, int offsetY, GameApp game) {
-    super(2, 5, offsetX, offsetY, game);
+  public TowerStore(int money, int offsetX, int offsetY) {
+    super(2, 5, offsetX, offsetY);
     towers = new ArrayList<Tower>();
     generateTowers();
     this.money = money;
   }
 
   public void selectTower(float coordX, float coordY) {
-    GridSquare square = getTouchedSquare(coordX, coordY);
+    TowerSquare square = (TowerSquare)getTouchedSquare(coordX, coordY);
     selectedTower = square.getTower();
   }
 
@@ -47,9 +45,9 @@ public class TowerStore extends Grid {
     towers.add(new Tower("Basic Tower", 50));
     for (int i = 0; i < towers.size(); i++) {
       if (i % 2 == 0) {
-        getSquare(1, i / 2).setTower(towers.get(i));
+        ((TowerSquare)getSquare(1, i / 2)).setTower(towers.get(i));
       } else {
-        getSquare(0, (int) Math.ceil(i / 2.0)).setTower(towers.get(i));
+        ((TowerSquare)getSquare(0, (int) Math.ceil(i / 2.0))).setTower(towers.get(i));
       }
     }
   }
