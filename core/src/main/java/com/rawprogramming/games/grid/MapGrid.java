@@ -1,0 +1,100 @@
+package com.rawprogramming.games.grid;
+
+import com.badlogic.gdx.Gdx;
+import com.rawprogramming.games.towers.Tower;
+
+import java.util.Scanner;
+
+public class MapGrid extends Grid {
+
+  private PathSquare spawnSquare;
+
+  private static enum TileType {
+    TOWERTILE, PATHTILE, SPAWNTILE
+  }
+
+  /**
+   * Constructor for MapGrid.
+   * @param file File to read in grid
+   * @param offsetX Initial offset along x axis
+   * @param offsetY Initial offset along y axis
+   */
+  public MapGrid(String file, int offsetX, int offsetY) {
+    super(offsetX, offsetY);
+
+    try {
+      Scanner scanner = new Scanner(Gdx.files.internal(file).reader());
+
+      this.rows = scanner.nextInt();
+      this.cols = scanner.nextInt();
+
+      grid = new GridSquare[rows][cols];
+
+      for (int row = 0; row < rows; row++) {
+        System.out.println();
+        for (int col = 0; col < cols; col++) {
+          TileType type = TileType.values()[scanner.nextInt()];
+          switch (type) {
+            case TOWERTILE:
+              System.out.print(0);
+              grid[row][col] = new TowerSquare(col, row, this.offsetX, this.offsetY, tileLen);
+              break;
+            case PATHTILE:
+              System.out.print(1);
+              grid[row][col] = new PathSquare(col, row, this.offsetX, this.offsetY, tileLen);
+              break;
+            case SPAWNTILE:
+              spawnSquare = new PathSquare(col, row, this.offsetX, this.offsetY, tileLen);
+              grid[row][col] = spawnSquare;
+              break;
+            default:
+              // Error or ignore
+              break;
+          }
+        }
+      }
+
+      generatePath(spawnSquare);
+
+      scanner.close();
+    } catch (Exception exception) {
+      exception.printStackTrace();
+    }
+  }
+
+  private void generatePath(PathSquare square) {
+    for (int col = -1; col <= 1; col++) {
+      for (int row = -1; row <= 1; row++) {
+        if ((col + row) == -1 || (col + row) == 1) {
+
+          int newCol = square.getCol() + col;
+          int newRow = square.getRow() + row;
+
+          if (newRow >= 0 && newCol >= 0 && newRow < rows && newCol < cols) {
+            if (checkPath(getSquare(newCol, newRow))) {
+              PathSquare pathSquare = (PathSquare) getSquare(newCol, newRow);
+              square.setNextSquare(pathSquare);
+              generatePath(pathSquare);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private boolean checkPath(GridSquare square) {
+    return square != null && square instanceof PathSquare
+        && ((PathSquare) square).getNextSquare() == null;
+  }
+
+  /**
+   * Checks if square can hold tower, and places tower.
+   * @param square Square to place tower
+   * @param tower Tower to place in square
+   */
+  public void placeTower(GridSquare square, Tower tower) {
+    if (square instanceof TowerSquare) {
+      ((TowerSquare) square).setTower(tower);
+    }
+  }
+}
