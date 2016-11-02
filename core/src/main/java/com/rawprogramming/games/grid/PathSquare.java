@@ -27,4 +27,8 @@ public class PathSquare extends GridSquare {
   public void setNextSquare(PathSquare nextSquare) {
     this.nextSquare = nextSquare;
   }
+  public boolean isEqualToPosition(int x, int y)
+  {
+	  return getCenterX() == x && getCenterY() == y;
+  }
 }
