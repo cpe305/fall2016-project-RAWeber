@@ -12,11 +12,10 @@ public class TowerSquare extends GridSquare {
    * Constructor for TowerSquare.
    * @param col Column in grid
    * @param row Row in grid
-   * @param offsetX Initial x offset
-   * @param offsetY Initial y offset
+   * @param grid Reference to the grid this is in
    */
-  public TowerSquare(int col, int row, int offsetX, int offsetY) {
-    super(col, row, offsetX, offsetY);
+  public TowerSquare(int col, int row, Grid grid) {
+    super(col, row, grid);
     tile = GameApp.manager.get("TowerTile.png", Texture.class);
     tower = null;
   }

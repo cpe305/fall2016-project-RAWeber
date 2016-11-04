@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class MapGrid extends Grid {
 
   private PathSquare spawnSquare;
+  private GridSquare selectedSquare;
 
   private static enum TileType {
     TOWERTILE, PATHTILE, SPAWNTILE
@@ -36,13 +37,13 @@ public class MapGrid extends Grid {
           TileType type = TileType.values()[scanner.nextInt()];
           switch (type) {
             case TOWERTILE:
-              grid[row][col] = new TowerSquare(col, row, this.offsetX, this.offsetY);
+              grid[row][col] = new TowerSquare(col, row, this);
               break;
             case PATHTILE:
-              grid[row][col] = new PathSquare(col, row, this.offsetX, this.offsetY);
+              grid[row][col] = new PathSquare(col, row, this);
               break;
             case SPAWNTILE:
-              spawnSquare = new PathSquare(col, row, this.offsetX, this.offsetY);
+              spawnSquare = new PathSquare(col, row, this);
               grid[row][col] = spawnSquare;
               break;
             default:
@@ -86,17 +87,23 @@ public class MapGrid extends Grid {
 
   /**
    * Checks if square can hold tower, and places tower.
-   * 
-   * @param square Square to place tower
    * @param tower Tower to place in square
    */
-  public void placeTower(GridSquare square, Tower tower) {
-    if (square instanceof TowerSquare) {
-      ((TowerSquare) square).setTower(tower);
+  public void placeTower(Tower tower) {
+    if (checkAvailable(selectedSquare)) {
+      ((TowerSquare) selectedSquare).setTower(tower);
     }
   }
 
   public PathSquare getSpawnSquare() {
     return spawnSquare;
+  }
+
+  public void setSelectedSquare(GridSquare selectedSquare) {
+    this.selectedSquare = selectedSquare;
+  }
+
+  public boolean checkAvailable(GridSquare square) {
+    return square instanceof TowerSquare && !((TowerSquare) square).hasTower();
   }
 }

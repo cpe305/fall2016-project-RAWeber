@@ -31,10 +31,10 @@ public class GameScreen implements Screen {
     this.game = game;
 
     camera = new OrthographicCamera();
-    camera.setToOrtho(true, 1280, 720);
+    camera.setToOrtho(true, 960, 540);
 
-    grid = new MapGrid("Level1.level", 50, 50);
-    store = new TowerStore(200, 50, (int) camera.viewportHeight - 150);
+    grid = new MapGrid("Level1.level", 0, 0);
+    store = new TowerStore(200, 0, 0);
     spawner = new Spawner(10, 0, 1, grid.getSpawnSquare());
   }
 
@@ -53,8 +53,8 @@ public class GameScreen implements Screen {
 
     GameApp.batch.begin();
     grid.render();
-    store.render();
     spawner.render();
+    store.render();
     GameApp.batch.end();
 
     if (Gdx.input.justTouched()) {
@@ -64,16 +64,21 @@ public class GameScreen implements Screen {
 
       if (grid.checkTouch(touchPos.x, touchPos.y)) {
         GridSquare square = grid.getTouchedSquare(touchPos.x, touchPos.y);
-        System.out.println(square.getRow() + " " + square.getCol());
-        if (store.hasTowerSelected()) {
-          grid.placeTower(square, store.buyTower());
-        }
-      }
 
-      if (store.getGrid().checkTouch(touchPos.x, touchPos.y)) {
-        store.selectTower(touchPos.x, touchPos.y);
-      } else {
-        store.deselectTower();
+        if (!store.isEnabled()) {
+          grid.setSelectedSquare(square);
+          if (grid.checkAvailable(square)) {
+            store.getGrid().setOffsetX(square.getCoordX() - GridSquare.SquareSize * 3 / 2);
+            store.getGrid().setOffsetY(square.getCoordY() - GridSquare.SquareSize * 3 / 2);
+            store.toggleEnabled();
+          }
+        } else {
+          store.toggleEnabled();
+          if (store.getGrid().checkTouch(touchPos.x, touchPos.y)) {
+            store.selectTower(touchPos.x, touchPos.y);
+            grid.placeTower(store.buyTower());
+          }
+        }
       }
     }
 

@@ -61,7 +61,7 @@ public class Spawner {
    * Spawns an enemy.
    */
   public void spawnEnemy() {
-    Enemy enemy = new Enemy("BasicEnemy", 50, 2, 10, spawnSquare);
+    Enemy enemy = new Enemy("BasicEnemy", 50, 3, 10, spawnSquare);
     enemies.add(enemy);
     this.enemyCounter++;
 

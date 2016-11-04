@@ -1,10 +1,14 @@
 package com.rawprogramming.games.towers;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.rawprogramming.games.GameApp;
+
 public class Tower {
 
   private String name;
   private int cost;
   private int kills;
+  private Texture sprite;
 
   private TowerUpgrade upgrade1;
   private TowerUpgrade upgrade2;
@@ -14,10 +18,12 @@ public class Tower {
   public Tower(String name, int cost) {
     this.name = name;
     this.cost = cost;
+    this.sprite = GameApp.manager.get(this.name + ".png", Texture.class);
   }
 
   /**
    * Constructor for Tower.
+   * 
    * @param name Name of tower
    * @param cost Cost of tower
    * @param attack Attack type of tower
@@ -51,5 +57,9 @@ public class Tower {
 
   public int getCost() {
     return cost;
+  }
+
+  public Texture getSprite() {
+    return sprite;
   }
 }

@@ -1,6 +1,5 @@
 package com.rawprogramming.games.grid;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.rawprogramming.games.GameApp;
 
 public abstract class Grid {
@@ -32,8 +31,8 @@ public abstract class Grid {
         GameApp.batch.draw(square.getTile(), square.getCoordX(), square.getCoordY(),
             GridSquare.SquareSize, GridSquare.SquareSize);
         if (square instanceof TowerSquare && ((TowerSquare) square).hasTower()) {
-          GameApp.batch.draw(GameApp.manager.get("BasicTower.png", Texture.class),
-              square.getCoordX(), square.getCoordY(), GridSquare.SquareSize, GridSquare.SquareSize);
+          GameApp.batch.draw(((TowerSquare) square).getTower().getSprite(), square.getCoordX(),
+              square.getCoordY(), GridSquare.SquareSize, GridSquare.SquareSize);
         }
       }
     }

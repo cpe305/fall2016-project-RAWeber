@@ -12,11 +12,10 @@ public class PathSquare extends GridSquare {
    * 
    * @param col Column in grid
    * @param row Row in grid
-   * @param offsetX Initial x offset
-   * @param offsetY Initial y offset
+   * @param grid Reference to the grid this is in
    */
-  public PathSquare(int col, int row, int offsetX, int offsetY) {
-    super(col, row, offsetX, offsetY);
+  public PathSquare(int col, int row, Grid grid) {
+    super(col, row, grid);
     tile = GameApp.manager.get("PathTile.png", Texture.class);
   }
 

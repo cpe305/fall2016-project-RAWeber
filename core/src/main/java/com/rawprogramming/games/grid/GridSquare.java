@@ -5,12 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GridSquare {
   
-  public static final int SquareSize = 32;
+  public static final int SquareSize = 60;
 
   private int col;
   private int row;
-  private int offsetX;
-  private int offsetY;
+  private Grid grid;
 
   protected Texture tile;
 
@@ -19,14 +18,12 @@ public class GridSquare {
    * 
    * @param col Column in grid
    * @param row Row in grid
-   * @param offsetX Initial x offset
-   * @param offsetY Initial y offset
+   * @param grid Reference to the grid this is in
    */
-  public GridSquare(int col, int row, int offsetX, int offsetY) {
+  public GridSquare(int col, int row, Grid grid) {
     this.col = col;
     this.row = row;
-    this.offsetX = offsetX;
-    this.offsetY = offsetY;
+    this.grid = grid;
   }
 
   public Vector2 getCenter() {
@@ -34,11 +31,11 @@ public class GridSquare {
   }
 
   public int getCoordX() {
-    return col * SquareSize + offsetX;
+    return col * SquareSize + grid.offsetX;
   }
 
   public int getCoordY() {
-    return row * SquareSize + offsetY;
+    return row * SquareSize + grid.offsetY;
   }
 
   public int getCol() {
