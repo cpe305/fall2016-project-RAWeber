@@ -1,5 +1,10 @@
 package com.rawprogramming.games.enemies;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.rawprogramming.games.GameApp;
+import com.rawprogramming.games.grid.PathSquare;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,26 +15,28 @@ public class Spawner {
   private int enemyCounter;
   private int enemyDelay;
   private int enemyInterval;
-  private Enemy enemy;
+
+  private ArrayList<Enemy> enemies;
+  private PathSquare spawnSquare;
 
   private Timer timer;
 
   /**
    * Constructor for Spawner.
    * 
-   * @param enemy Enemy to Spawn
    * @param enemiesPerWave Enemies per wave.
-   * @param enemyDelay Initial spawn delay
-   * @param enemyInterval Time between enemy spawns
+   * @param enemyDelay Initial spawn delay in seconds
+   * @param enemyInterval Time between enemy spawns in seconds
    */
-  public Spawner(Enemy enemy, int enemiesPerWave, int enemyDelay, int enemyInterval) {
+  public Spawner(int enemiesPerWave, int enemyDelay, int enemyInterval, PathSquare spawnSquare) {
     this.waveNumber = 1;
     this.enemiesPerWave = enemiesPerWave;
     this.enemyCounter = 0;
-    this.enemyDelay = enemyDelay;
-    this.enemyInterval = enemyInterval;
+    this.enemyDelay = enemyDelay * 1000;
+    this.enemyInterval = enemyInterval * 1000;
     this.timer = new Timer();
-    this.enemy = enemy;
+    this.spawnSquare = spawnSquare;
+    enemies = new ArrayList<Enemy>();
   }
 
   /**
@@ -44,23 +51,18 @@ public class Spawner {
   /**
    * Stops spawning enemies.
    */
-  public void stopWave() {
+  private void stopWave() {
     timer.cancel();
     this.waveNumber++;
     this.enemyCounter = 0;
-  }
-
-  public void incrementEnemyCounter() {
-    this.enemyCounter++;
   }
 
   /**
    * Spawns an enemy.
    */
   public void spawnEnemy() {
-    Enemy enemy =
-        new Enemy(this.enemy.getName(), this.enemy.getHealth(), this.enemy.getSpeed(),
-            this.enemy.getReward());
+    Enemy enemy = new Enemy("BasicEnemy", 50, 1, 10, spawnSquare);
+    enemies.add(enemy);
     enemy.spawn();
     this.enemyCounter++;
 
@@ -72,5 +74,19 @@ public class Spawner {
       stopWave();
     }
     // new spawn is already scheduled
+  }
+
+  public boolean waveComplete() {
+    return enemies.size() == 0;
+  }
+
+  public ArrayList<Enemy> getSpawnedEnemies() {
+    return enemies;
+  }
+  
+  public void render(){
+    for(Enemy enemy : enemies){
+      enemy.render();
+    }
   }
 }

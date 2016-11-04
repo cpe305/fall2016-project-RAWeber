@@ -9,7 +9,7 @@ public abstract class Grid {
   protected int offsetY;
   protected int rows;
   protected int cols;
-  protected int tileLen;
+  public static final int tileLen = 32;
   protected GridSquare[][] grid;
 
   /**
@@ -20,7 +20,6 @@ public abstract class Grid {
   public Grid(int offsetX, int offsetY) {
     this.offsetX = offsetX;
     this.offsetY = offsetY;
-    tileLen = 32;
   }
 
   /**

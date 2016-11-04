@@ -9,6 +9,7 @@ public class PathSquare extends GridSquare {
 
   /**
    * Constructor for TowerSquare.
+   * 
    * @param col Column in grid
    * @param row Row in grid
    * @param offsetX Initial x offset
@@ -27,8 +28,8 @@ public class PathSquare extends GridSquare {
   public void setNextSquare(PathSquare nextSquare) {
     this.nextSquare = nextSquare;
   }
-  public boolean isEqualToPosition(int x, int y)
-  {
-	  return getCenterX() == x && getCenterY() == y;
+
+  public boolean isAtCenter(int coordX, int coordY) {
+    return getCenteredX() == coordX && getCenteredY() == coordY;
   }
 }

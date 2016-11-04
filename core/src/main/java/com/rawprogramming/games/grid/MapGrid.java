@@ -15,6 +15,7 @@ public class MapGrid extends Grid {
 
   /**
    * Constructor for MapGrid.
+   * 
    * @param file File to read in grid
    * @param offsetX Initial offset along x axis
    * @param offsetY Initial offset along y axis
@@ -31,16 +32,13 @@ public class MapGrid extends Grid {
       grid = new GridSquare[rows][cols];
 
       for (int row = 0; row < rows; row++) {
-        System.out.println();
         for (int col = 0; col < cols; col++) {
           TileType type = TileType.values()[scanner.nextInt()];
           switch (type) {
             case TOWERTILE:
-              System.out.print(0);
               grid[row][col] = new TowerSquare(col, row, this.offsetX, this.offsetY, tileLen);
               break;
             case PATHTILE:
-              System.out.print(1);
               grid[row][col] = new PathSquare(col, row, this.offsetX, this.offsetY, tileLen);
               break;
             case SPAWNTILE:
@@ -67,12 +65,12 @@ public class MapGrid extends Grid {
       for (int row = -1; row <= 1; row++) {
         if ((col + row) == -1 || (col + row) == 1) {
 
-          int newCol = square.getCol() + col;
           int newRow = square.getRow() + row;
+          int newCol = square.getCol() + col;
 
           if (newRow >= 0 && newCol >= 0 && newRow < rows && newCol < cols) {
-            if (checkPath(getSquare(newCol, newRow))) {
-              PathSquare pathSquare = (PathSquare) getSquare(newCol, newRow);
+            if (checkPath(getSquare(newRow, newCol))) {
+              PathSquare pathSquare = (PathSquare) getSquare(newRow, newCol);
               square.setNextSquare(pathSquare);
               generatePath(pathSquare);
             }
@@ -83,12 +81,12 @@ public class MapGrid extends Grid {
   }
 
   private boolean checkPath(GridSquare square) {
-    return square != null && square instanceof PathSquare
-        && ((PathSquare) square).getNextSquare() == null;
+    return square instanceof PathSquare && ((PathSquare) square).getNextSquare() == null;
   }
 
   /**
    * Checks if square can hold tower, and places tower.
+   * 
    * @param square Square to place tower
    * @param tower Tower to place in square
    */
@@ -96,5 +94,9 @@ public class MapGrid extends Grid {
     if (square instanceof TowerSquare) {
       ((TowerSquare) square).setTower(tower);
     }
+  }
+
+  public PathSquare getSpawnSquare() {
+    return spawnSquare;
   }
 }
