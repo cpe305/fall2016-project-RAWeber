@@ -14,10 +14,9 @@ public class PathSquare extends GridSquare {
    * @param row Row in grid
    * @param offsetX Initial x offset
    * @param offsetY Initial y offset
-   * @param length Length of square side
    */
-  public PathSquare(int col, int row, int offsetX, int offsetY, int length) {
-    super(col, row, offsetX, offsetY, length);
+  public PathSquare(int col, int row, int offsetX, int offsetY) {
+    super(col, row, offsetX, offsetY);
     tile = GameApp.manager.get("PathTile.png", Texture.class);
   }
 
@@ -27,9 +26,5 @@ public class PathSquare extends GridSquare {
 
   public void setNextSquare(PathSquare nextSquare) {
     this.nextSquare = nextSquare;
-  }
-
-  public boolean isAtCenter(int coordX, int coordY) {
-    return getCenteredX() == coordX && getCenteredY() == coordY;
   }
 }

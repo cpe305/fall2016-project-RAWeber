@@ -36,13 +36,13 @@ public class MapGrid extends Grid {
           TileType type = TileType.values()[scanner.nextInt()];
           switch (type) {
             case TOWERTILE:
-              grid[row][col] = new TowerSquare(col, row, this.offsetX, this.offsetY, tileLen);
+              grid[row][col] = new TowerSquare(col, row, this.offsetX, this.offsetY);
               break;
             case PATHTILE:
-              grid[row][col] = new PathSquare(col, row, this.offsetX, this.offsetY, tileLen);
+              grid[row][col] = new PathSquare(col, row, this.offsetX, this.offsetY);
               break;
             case SPAWNTILE:
-              spawnSquare = new PathSquare(col, row, this.offsetX, this.offsetY, tileLen);
+              spawnSquare = new PathSquare(col, row, this.offsetX, this.offsetY);
               grid[row][col] = spawnSquare;
               break;
             default:

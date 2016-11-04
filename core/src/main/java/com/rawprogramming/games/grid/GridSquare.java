@@ -1,51 +1,44 @@
 package com.rawprogramming.games.grid;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 
 public class GridSquare {
+  
+  public static final int SquareSize = 32;
 
   private int col;
   private int row;
-  int offsetX;
-  int offsetY;
-  private int length;
+  private int offsetX;
+  private int offsetY;
 
   protected Texture tile;
 
   /**
    * Constructor for GridSquare.
+   * 
    * @param col Column in grid
    * @param row Row in grid
    * @param offsetX Initial x offset
    * @param offsetY Initial y offset
-   * @param length Length of square side
    */
-  public GridSquare(int col, int row, int offsetX, int offsetY, int length) {
+  public GridSquare(int col, int row, int offsetX, int offsetY) {
     this.col = col;
     this.row = row;
     this.offsetX = offsetX;
     this.offsetY = offsetY;
-    this.length = length;
-  }
-  
-  public int getCenteredX() {
-    return getCoordX() + length / 2;
-  }
-  
-  public int getCenteredY() {
-    return getCoordY() + length / 2;
   }
 
-  public int getLength() {
-    return length;
+  public Vector2 getCenter() {
+    return new Vector2(getCoordX() + SquareSize / 2, getCoordY() + SquareSize / 2);
   }
 
   public int getCoordX() {
-    return col * length + offsetX;
+    return col * SquareSize + offsetX;
   }
 
   public int getCoordY() {
-    return row * length + offsetY;
+    return row * SquareSize + offsetY;
   }
 
   public int getCol() {

@@ -9,11 +9,11 @@ public abstract class Grid {
   protected int offsetY;
   protected int rows;
   protected int cols;
-  public static final int tileLen = 32;
   protected GridSquare[][] grid;
 
   /**
    * Constructor for grid.
+   * 
    * @param offsetX Offset of grid along x axis
    * @param offsetY Offset of grid along y axis
    */
@@ -29,11 +29,11 @@ public abstract class Grid {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         GridSquare square = grid[row][col];
-        GameApp.batch.draw(square.getTile(), square.getCoordX(), square.getCoordY(), tileLen,
-            tileLen);
+        GameApp.batch.draw(square.getTile(), square.getCoordX(), square.getCoordY(),
+            GridSquare.SquareSize, GridSquare.SquareSize);
         if (square instanceof TowerSquare && ((TowerSquare) square).hasTower()) {
           GameApp.batch.draw(GameApp.manager.get("BasicTower.png", Texture.class),
-              grid[row][col].getCoordX(), grid[row][col].getCoordY(), tileLen, tileLen);
+              square.getCoordX(), square.getCoordY(), GridSquare.SquareSize, GridSquare.SquareSize);
         }
       }
     }
@@ -53,8 +53,8 @@ public abstract class Grid {
    * @return Returns square at given coordinates
    */
   public GridSquare getTouchedSquare(float coordX, float coordY) {
-    int gridX = ((int) coordX - offsetX) / tileLen;
-    int gridY = ((int) coordY - offsetY) / tileLen;
+    int gridX = ((int) coordX - offsetX) / GridSquare.SquareSize;
+    int gridY = ((int) coordY - offsetY) / GridSquare.SquareSize;
     return getSquare(gridY, gridX);
   }
 
@@ -63,10 +63,10 @@ public abstract class Grid {
   }
 
   private int getWidth() {
-    return cols * tileLen;
+    return cols * GridSquare.SquareSize;
   }
 
   private int getHeight() {
-    return rows * tileLen;
+    return rows * GridSquare.SquareSize;
   }
 }

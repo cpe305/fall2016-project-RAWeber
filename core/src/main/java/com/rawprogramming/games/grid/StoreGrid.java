@@ -18,7 +18,7 @@ public class StoreGrid extends Grid {
 
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
-        grid[row][col] = new TowerSquare(col, row, this.offsetX, this.offsetY, this.tileLen);
+        grid[row][col] = new TowerSquare(col, row, this.offsetX, this.offsetY);
       }
     }
   }

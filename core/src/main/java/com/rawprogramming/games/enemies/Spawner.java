@@ -1,7 +1,5 @@
 package com.rawprogramming.games.enemies;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.grid.PathSquare;
 
 import java.util.ArrayList;
@@ -17,6 +15,7 @@ public class Spawner {
   private int enemyInterval;
 
   private ArrayList<Enemy> enemies;
+  private ArrayList<Enemy> deadEnemies;
   private PathSquare spawnSquare;
 
   private Timer timer;
@@ -36,7 +35,8 @@ public class Spawner {
     this.enemyInterval = enemyInterval * 1000;
     this.timer = new Timer();
     this.spawnSquare = spawnSquare;
-    enemies = new ArrayList<Enemy>();
+    this.enemies = new ArrayList<Enemy>();
+    this.deadEnemies = new ArrayList<Enemy>();
   }
 
   /**
@@ -61,32 +61,35 @@ public class Spawner {
    * Spawns an enemy.
    */
   public void spawnEnemy() {
-    Enemy enemy = new Enemy("BasicEnemy", 50, 1, 10, spawnSquare);
+    Enemy enemy = new Enemy("BasicEnemy", 50, 2, 10, spawnSquare);
     enemies.add(enemy);
-    enemy.spawn();
     this.enemyCounter++;
 
-    System.out.println("enemyCounter: " + this.enemyCounter);
-
     if (this.enemyCounter >= waveNumber * enemiesPerWave) {
-      // end of wave
-      System.out.println("End of Wave");
       stopWave();
     }
-    // new spawn is already scheduled
   }
 
+  /**
+   * Checks whether there are enemies still alive
+   * @return Returns whether enemies alive.
+   */
   public boolean waveComplete() {
     return enemies.size() == 0;
   }
 
-  public ArrayList<Enemy> getSpawnedEnemies() {
-    return enemies;
-  }
-  
-  public void render(){
-    for(Enemy enemy : enemies){
-      enemy.render();
+  /**
+   * Render all enemies that are currently alive.
+   */
+  public void render() {
+    for (Enemy enemy : enemies) {
+      if (enemy.isDead()) {
+        deadEnemies.add(enemy);
+      } else {
+        enemy.render();
+      }
     }
+    enemies.removeAll(deadEnemies);
+    deadEnemies.clear();
   }
 }

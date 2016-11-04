@@ -4,20 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.rawprogramming.games.GameApp;
-import com.rawprogramming.games.grid.Grid;
+import com.rawprogramming.games.grid.GridSquare;
 import com.rawprogramming.games.grid.PathSquare;
 
 public class Enemy {
 
   private String name;
   private int health;
-  private float coordX;
-  private float coordY;
+  private Vector2 center;
   private float speed;
-  private double direction;
   private int reward;
+  private int rotation;
   private PathSquare destination;
+  private boolean isDead;
 
   private static final int FRAME_COLS = 2;
   private static final int FRAME_ROWS = 1;
@@ -41,11 +42,11 @@ public class Enemy {
   public Enemy(String name, int health, float speed, int reward, PathSquare destination) {
     this.name = name;
     this.health = health;
-    this.speed = speed;
+    this.speed = speed * GridSquare.SquareSize;
     this.reward = reward;
     this.destination = destination;
-    this.coordX = destination.getCenteredX();
-    this.coordY = destination.getCenteredY();
+    isDead = false;
+    center = new Vector2(destination.getCenter());
 
     walkSheet = GameApp.manager.get(name + ".png", Texture.class);
     TextureRegion[][] tmp = TextureRegion.split(walkSheet, 32, 32);
@@ -61,51 +62,10 @@ public class Enemy {
     stateTime = 0f;
   }
 
-  public void spawn() {
-    //System.out.println("Spawning enemy: " + this.name);
-    move();
-  }
-
-  /**
-   * Moves enemy towards destination.
-   */
-  public void move() {
-    while (destination != null) {
-      moveInXDir();
-      moveInYDir();
-      updateDestination();
-    }
-  }
-
-  private void moveInXDir() {
-    if (coordX + speed * Gdx.graphics.getDeltaTime() < destination.getCenteredX()) {
-      coordX += speed * Gdx.graphics.getDeltaTime() ;
-      // TODO: update xPos by xComponent of speed
-    } else if (coordX - speed * Gdx.graphics.getDeltaTime() > destination.getCenteredX()) {
-      coordX -= speed * Gdx.graphics.getDeltaTime() ;
-      // TODO: update xPos by xComponent of speed
-    } else {
-      coordX = destination.getCenteredX();
-    }
-  }
-
-  private void moveInYDir() {
-    if (coordY + speed * Gdx.graphics.getDeltaTime() < destination.getCenteredY()) {
-      coordY += speed * Gdx.graphics.getDeltaTime() ;
-      // TODO: update yPos by yComponent of speed
-    } else if (coordY - speed * Gdx.graphics.getDeltaTime() > destination.getCenteredY()) {
-      coordY -= speed * Gdx.graphics.getDeltaTime() ;
-      // TODO: update yPos by yComponent of speed
-    } else {
-      coordY = destination.getCenteredY();
-    }
-  }
-
   private void updateDestination() {
     // checks to see if destination is reached
-    if (destination.isAtCenter((int)coordX, (int)coordY)) {
+    if (destination.getCoordX() == getX() && destination.getCoordY() == getY()) {
       destination = destination.getNextSquare();
-      // TODO update direction when destination is updated
     }
   }
 
@@ -129,10 +89,59 @@ public class Enemy {
     return reward;
   }
 
+  private int getX() {
+    return (int) (center.x - GridSquare.SquareSize / 2);
+  }
+
+  private int getY() {
+    return (int) (center.y - GridSquare.SquareSize / 2);
+  }
+
+  public boolean isDead() {
+    return isDead;
+  }
+
+  private void move(Vector2 vector) {
+    center.add(vector);
+    if (vector.x > 0) {
+      rotation = 270;
+      if (center.x > destination.getCenter().x) {
+        center = destination.getCenter();
+      }
+    } else if (vector.x < 0) {
+      rotation = 90;
+      if (center.x < destination.getCenter().x) {
+        center = destination.getCenter();
+      }
+    } else if (vector.y < 0) {
+      rotation = 180;
+      if (center.y < destination.getCenter().y) {
+        center = destination.getCenter();
+      }
+    } else if (vector.y > 0) {
+      rotation = 0;
+      if (center.y > destination.getCenter().y) {
+        center = destination.getCenter();
+      }
+    }
+  }
+
+  /**
+   * Renders enemy on screen.
+   */
   public void render() {
+
+    if (destination != null) {
+      Vector2 direction = destination.getCenter().sub((int) center.x, (int) center.y).nor();
+      move(direction.scl(speed * Gdx.graphics.getDeltaTime()));
+      updateDestination();
+    } else {
+      isDead = true;
+    }
+
     stateTime += Gdx.graphics.getDeltaTime();
     currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-    GameApp.batch.draw(currentFrame, coordX - Grid.tileLen / 2, coordY - Grid.tileLen / 2,
-        Grid.tileLen / 2, Grid.tileLen / 2, Grid.tileLen, Grid.tileLen, 1, 1, -90);
+    GameApp.batch.draw(currentFrame, getX(), getY(), GridSquare.SquareSize / 2,
+        GridSquare.SquareSize / 2, GridSquare.SquareSize, GridSquare.SquareSize, 1, 1, rotation);
   }
 }
