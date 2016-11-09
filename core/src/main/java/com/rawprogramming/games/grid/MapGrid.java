@@ -59,7 +59,7 @@ public class MapGrid extends Grid {
 
       scanner.close();
     } catch (Exception exception) {
-      GameScreen.lgr.info(exception.toString());
+      GameScreen.lgr.error("Level input file not correct format", exception);
     }
   }
 
