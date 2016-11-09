@@ -57,7 +57,7 @@ public class MapGrid extends Grid {
 
       scanner.close();
     } catch (Exception exception) {
-      exception.printStackTrace();
+      exception.printStackTrace(System.err);
     }
   }
 

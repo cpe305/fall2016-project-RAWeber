@@ -141,7 +141,7 @@ public class Enemy {
 
     stateTime += Gdx.graphics.getDeltaTime();
     currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-    GameApp.batch.draw(currentFrame, getX(), getY(), GridSquare.SquareSize / 2,
-        GridSquare.SquareSize / 2, GridSquare.SquareSize, GridSquare.SquareSize, 1, 1, rotation);
+    GameApp.batch.draw(currentFrame, getX(), getY(), GridSquare.SquareSize / 2.0f,
+        GridSquare.SquareSize / 2.0f, GridSquare.SquareSize, GridSquare.SquareSize, 1, 1, rotation);
   }
 }

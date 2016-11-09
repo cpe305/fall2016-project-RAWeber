@@ -75,7 +75,7 @@ public class Spawner {
    * @return Returns whether enemies alive.
    */
   public boolean waveComplete() {
-    return enemies.size() == 0;
+    return enemies.isEmpty();
   }
 
   /**
