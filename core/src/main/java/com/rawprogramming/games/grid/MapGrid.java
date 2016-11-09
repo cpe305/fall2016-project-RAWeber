@@ -1,6 +1,8 @@
 package com.rawprogramming.games.grid;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Logger;
+import com.rawprogramming.games.screens.GameScreen;
 import com.rawprogramming.games.towers.Tower;
 
 import java.util.Scanner;
@@ -10,7 +12,7 @@ public class MapGrid extends Grid {
   private PathSquare spawnSquare;
   private GridSquare selectedSquare;
 
-  private static enum TileType {
+  private enum TileType {
     TOWERTILE, PATHTILE, SPAWNTILE
   }
 
@@ -57,7 +59,7 @@ public class MapGrid extends Grid {
 
       scanner.close();
     } catch (Exception exception) {
-      exception.printStackTrace(System.err);
+      GameScreen.lgr.info(exception.toString());
     }
   }
 

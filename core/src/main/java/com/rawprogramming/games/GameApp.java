@@ -7,12 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.rawprogramming.games.screens.TitleScreen;
 
 public class GameApp extends Game {
-  public static SpriteBatch batch;
-  public static AssetManager manager = new AssetManager();
+  public static final SpriteBatch batch = new SpriteBatch();
+  public static final AssetManager manager = new AssetManager();
 
   @Override
   public void create() {
-    batch = new SpriteBatch();
     manager.load("TowerTile.png", Texture.class);
     manager.load("PathTile.png", Texture.class);
     manager.load("BasicTower.png", Texture.class);
