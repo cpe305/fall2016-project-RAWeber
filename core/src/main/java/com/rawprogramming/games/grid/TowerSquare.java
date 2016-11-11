@@ -23,7 +23,7 @@ public class TowerSquare extends GridSquare {
    */
   public TowerSquare(int col, int row, Grid grid) {
     super(col, row, grid);
-    tile = GameApp.manager.get("TowerTile.png", Texture.class);
+    tile = GameApp.getAssetManager().get("TowerTile.png", Texture.class);
     tower = null;
   }
 

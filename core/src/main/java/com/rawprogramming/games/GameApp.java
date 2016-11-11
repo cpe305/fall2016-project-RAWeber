@@ -12,11 +12,12 @@ import com.rawprogramming.games.screens.TitleScreen;
  * @author Robert
  */
 public class GameApp extends Game {
-  public static SpriteBatch batch;
-  public static final AssetManager manager = new AssetManager();
+  private static SpriteBatch batch;
+  private static AssetManager manager;
 
   @Override
   public void create() {
+    manager = new AssetManager();
     batch = new SpriteBatch();
     manager.load("TowerTile.png", Texture.class);
     manager.load("PathTile.png", Texture.class);
@@ -37,5 +38,13 @@ public class GameApp extends Game {
   public void dispose() {
     batch.dispose();
     manager.dispose();
+  }
+
+  public static SpriteBatch getSpritebatch() {
+    return batch;
+  }
+  
+  public static AssetManager getAssetManager() {
+    return manager;
   }
 }

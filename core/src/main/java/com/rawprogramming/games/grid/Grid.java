@@ -34,11 +34,11 @@ public abstract class Grid {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         GridSquare square = mapGrid[row][col];
-        GameApp.batch.draw(square.getTile(), square.getCoordX(), square.getCoordY(),
+        GameApp.getSpritebatch().draw(square.getTile(), square.getCoordX(), square.getCoordY(),
             GridSquare.SIZE, GridSquare.SIZE);
         if (square instanceof TowerSquare && ((TowerSquare) square).hasTower()) {
-          GameApp.batch.draw(((TowerSquare) square).getTower().getSprite(), square.getCoordX(),
-              square.getCoordY(), GridSquare.SIZE, GridSquare.SIZE);
+          GameApp.getSpritebatch().draw(((TowerSquare) square).getTower().getSprite(),
+              square.getCoordX(), square.getCoordY(), GridSquare.SIZE, GridSquare.SIZE);
         }
       }
     }

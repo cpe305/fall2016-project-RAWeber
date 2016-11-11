@@ -53,7 +53,8 @@ public class StoreGrid extends Grid {
 
   @Override
   public void render() {
-    GameApp.batch.draw(GameApp.manager.get("StoreBackground.png", Texture.class), offsetX - 8.0f,
+    GameApp.getSpritebatch().draw(
+        GameApp.getAssetManager().get("StoreBackground.png", Texture.class), offsetX - 8.0f,
         offsetY - 4.0f, GridSquare.SIZE * 4.0f + 16.0f, GridSquare.SIZE + 24.0f);
     super.render();
   }

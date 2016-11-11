@@ -59,13 +59,13 @@ public class GameScreen implements Screen {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     camera.update();
-    GameApp.batch.setProjectionMatrix(camera.combined);
+    GameApp.getSpritebatch().setProjectionMatrix(camera.combined);
 
-    GameApp.batch.begin();
+    GameApp.getSpritebatch().begin();
     grid.render();
     spawner.render();
     store.render();
-    GameApp.batch.end();
+    GameApp.getSpritebatch().end();
 
     if (Gdx.input.justTouched()) {
       Vector3 touchPos = new Vector3();

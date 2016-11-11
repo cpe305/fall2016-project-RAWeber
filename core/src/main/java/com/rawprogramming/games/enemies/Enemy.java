@@ -54,7 +54,7 @@ public class Enemy {
     isDead = false;
     center = new Vector2(spawnSquare.getCenter());
 
-    walkSheet = GameApp.manager.get(name + ".png", Texture.class);
+    walkSheet = GameApp.getAssetManager().get(name + ".png", Texture.class);
     TextureRegion[][] tmp = TextureRegion.split(walkSheet, 32, 32);
     walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 
@@ -123,7 +123,7 @@ public class Enemy {
 
     stateTime += Gdx.graphics.getDeltaTime();
     currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-    GameApp.batch.draw(currentFrame, getX(), getY(), GridSquare.SIZE / 2.0f,
+    GameApp.getSpritebatch().draw(currentFrame, getX(), getY(), GridSquare.SIZE / 2.0f,
         GridSquare.SIZE / 2.0f, GridSquare.SIZE, GridSquare.SIZE, 1, 1, rotation);
   }
 

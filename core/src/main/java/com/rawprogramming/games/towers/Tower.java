@@ -30,7 +30,7 @@ public class Tower {
   public Tower(String name, int cost) {
     this.name = name;
     this.cost = cost;
-    this.sprite = GameApp.manager.get(this.name + ".png", Texture.class);
+    this.sprite = GameApp.getAssetManager().get(this.name + ".png", Texture.class);
   }
 
   /**

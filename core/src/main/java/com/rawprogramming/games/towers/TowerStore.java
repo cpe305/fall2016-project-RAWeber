@@ -115,6 +115,6 @@ public class TowerStore {
       grid.render();
     }
 
-    font.draw(GameApp.batch, "Money: " + money, 10, 10);
+    font.draw(GameApp.getSpritebatch(), "Money: " + money, 10, 10);
   }
 }

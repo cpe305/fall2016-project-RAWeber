@@ -22,7 +22,7 @@ public class PathSquare extends GridSquare {
    */
   public PathSquare(int col, int row, Grid grid) {
     super(col, row, grid);
-    tile = GameApp.manager.get("PathTile.png", Texture.class);
+    tile = GameApp.getAssetManager().get("PathTile.png", Texture.class);
   }
 
   public PathSquare getNextSquare() {
