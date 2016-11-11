@@ -13,8 +13,14 @@ import com.rawprogramming.games.grid.GridSquare;
 import com.rawprogramming.games.grid.MapGrid;
 import com.rawprogramming.games.towers.TowerStore;
 
+/**
+ * Game screen for actual play.
+ * 
+ * @author Robert
+ *
+ */
 public class GameScreen implements Screen {
-  
+
   public static final Logger lgr = new Logger("GameScreen");
 
   private final GameApp game;
@@ -31,7 +37,7 @@ public class GameScreen implements Screen {
    * @param game Reference to GameApp
    */
   public GameScreen(GameApp game) {
-    
+
     this.game = game;
 
     camera = new OrthographicCamera();
@@ -44,7 +50,7 @@ public class GameScreen implements Screen {
 
   @Override
   public void show() {
-
+    // Unsupported at this time
   }
 
   @Override
@@ -66,24 +72,7 @@ public class GameScreen implements Screen {
       touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
       camera.unproject(touchPos);
 
-      if (grid.checkTouch(touchPos.x, touchPos.y)) {
-        GridSquare square = grid.getTouchedSquare(touchPos.x, touchPos.y);
-
-        if (!store.isEnabled()) {
-          grid.setSelectedSquare(square);
-          if (grid.checkAvailable(square)) {
-            store.getGrid().setOffsetX(square.getCoordX() - GridSquare.SquareSize * 3 / 2);
-            store.getGrid().setOffsetY(square.getCoordY() - GridSquare.SquareSize * 3 / 2);
-            store.toggleEnabled();
-          }
-        } else {
-          store.toggleEnabled();
-          if (store.getGrid().checkTouch(touchPos.x, touchPos.y)) {
-            store.selectTower(touchPos.x, touchPos.y);
-            grid.placeTower(store.buyTower());
-          }
-        }
-      }
+      processGridTouch(touchPos);
     }
 
     if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && spawner.waveComplete()) {
@@ -91,28 +80,49 @@ public class GameScreen implements Screen {
     }
   }
 
+  private void processGridTouch(Vector3 touchPos) {
+    if (grid.checkTouch(touchPos.x, touchPos.y)) {
+      GridSquare square = grid.getTouchedSquare(touchPos.x, touchPos.y);
+
+      if (!store.isEnabled()) {
+        grid.setSelectedSquare(square);
+        if (grid.checkAvailable(square)) {
+          store.getGrid().setOffsetX(square.getCoordX() - GridSquare.SIZE * 3 / 2);
+          store.getGrid().setOffsetY(square.getCoordY() - GridSquare.SIZE * 3 / 2);
+          store.toggleEnabled();
+        }
+      } else {
+        store.toggleEnabled();
+        if (store.getGrid().checkTouch(touchPos.x, touchPos.y)) {
+          store.selectTower(touchPos.x, touchPos.y);
+          grid.placeTower(store.buyTower());
+        }
+      }
+    }
+  }
+
   @Override
   public void resize(int width, int height) {
-
+    // Unsupported at this time
   }
 
   @Override
   public void pause() {
-
+    // Unsupported at this time
   }
 
   @Override
   public void resume() {
-
+    // Unsupported at this time
   }
 
   @Override
   public void hide() {
-
+    // Unsupported at this time
   }
 
   @Override
   public void dispose() {
-
+    // Unsupported at this time
   }
 }

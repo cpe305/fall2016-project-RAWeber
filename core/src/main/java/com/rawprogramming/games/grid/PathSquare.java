@@ -3,6 +3,12 @@ package com.rawprogramming.games.grid;
 import com.badlogic.gdx.graphics.Texture;
 import com.rawprogramming.games.GameApp;
 
+/**
+ * GridSquare that enemies can traverse.
+ * 
+ * @author Robert
+ *
+ */
 public class PathSquare extends GridSquare {
 
   private PathSquare nextSquare;

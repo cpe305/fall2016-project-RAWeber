@@ -7,6 +7,12 @@ import com.rawprogramming.games.grid.TowerSquare;
 
 import java.util.ArrayList;
 
+/**
+ * Store to buy towers from in game.
+ * 
+ * @author Robert
+ *
+ */
 public class TowerStore {
 
   private static final int STORE_COLS = 4;
@@ -17,7 +23,7 @@ public class TowerStore {
   private ArrayList<Tower> towers;
   private Tower selectedTower;
   private StoreGrid grid;
-  
+
   private BitmapFont font;
 
   /**
@@ -33,20 +39,27 @@ public class TowerStore {
     generateTowers();
     this.money = money;
     this.isEnabled = false;
-    
+
     this.font = new BitmapFont(true);
     this.font.getData().setScale(1.5f);
   }
 
+  /**
+   * Selects a tower from the store.
+   * 
+   * @param coordX X coordinate of tower to select
+   * @param coordY Y coordinate of tower to select
+   */
   public void selectTower(float coordX, float coordY) {
     TowerSquare square = grid.getTouchedSquare(coordX, coordY);
     selectedTower = square.getTower();
   }
 
-  public void deselectTower() {
-    selectedTower = null;
-  }
-
+  /**
+   * Buys the selected tower.
+   * 
+   * @return Returns the bought tower
+   */
   public Tower buyTower() {
     if (selectedTower != null && money >= selectedTower.getCost()) {
       money -= selectedTower.getCost();
@@ -70,10 +83,11 @@ public class TowerStore {
     }
   }
 
-  public boolean hasTowerSelected() {
-    return selectedTower != null;
-  }
-
+  /**
+   * Adds money to the players bank.
+   * 
+   * @param money The amount to add to the bank
+   */
   public void addMoney(int money) {
     this.money += money;
   }
@@ -86,21 +100,21 @@ public class TowerStore {
     return isEnabled;
   }
 
+  /**
+   * Toggles whether the store is visible.
+   */
   public void toggleEnabled() {
     isEnabled = !isEnabled;
   }
 
+  /**
+   * Renders the tower store.
+   */
   public void render() {
     if (isEnabled) {
       grid.render();
     }
 
     font.draw(GameApp.batch, "Money: " + money, 10, 10);
-
-    /*
-     * if (hasTowerSelected()) { GameApp.batch.draw(selectedTower.getSprite(), Gdx.input.getX() -
-     * GridSquare.SquareSize / 2, Gdx.input.getY() - GridSquare.SquareSize / 2,
-     * GridSquare.SquareSize, GridSquare.SquareSize); }
-     */
   }
 }

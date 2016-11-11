@@ -4,9 +4,11 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.rawprogramming.games.GameApp;
 
+// NOSONAR
 public class DesktopLauncher {
   /**
    * Driver for desktop app.
+   * 
    * @param arg Arguments for main driver
    */
   public static void main(String[] arg) {

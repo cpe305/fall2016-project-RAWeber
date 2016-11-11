@@ -3,9 +3,15 @@ package com.rawprogramming.games.grid;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Class representing a square in the game.
+ * 
+ * @author Robert
+ *
+ */
 public class GridSquare {
-  
-  public static final int SquareSize = 60;
+
+  public static final int SIZE = 60;
 
   private int col;
   private int row;
@@ -27,15 +33,15 @@ public class GridSquare {
   }
 
   public Vector2 getCenter() {
-    return new Vector2(getCoordX() + SquareSize / 2, getCoordY() + SquareSize / 2);
+    return new Vector2(getCoordX() + SIZE / 2, getCoordY() + SIZE / 2);
   }
 
   public int getCoordX() {
-    return col * SquareSize + grid.offsetX;
+    return col * SIZE + grid.offsetX;
   }
 
   public int getCoordY() {
-    return row * SquareSize + grid.offsetY;
+    return row * SIZE + grid.offsetY;
   }
 
   public int getCol() {

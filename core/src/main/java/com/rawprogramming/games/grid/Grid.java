@@ -2,13 +2,19 @@ package com.rawprogramming.games.grid;
 
 import com.rawprogramming.games.GameApp;
 
+/**
+ * Class representing grid of squares.
+ * 
+ * @author Robert
+ *
+ */
 public abstract class Grid {
 
   protected int offsetX;
   protected int offsetY;
   protected int rows;
   protected int cols;
-  protected GridSquare[][] grid;
+  protected GridSquare[][] mapGrid;
 
   /**
    * Constructor for grid.
@@ -27,17 +33,24 @@ public abstract class Grid {
   public void render() {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
-        GridSquare square = grid[row][col];
+        GridSquare square = mapGrid[row][col];
         GameApp.batch.draw(square.getTile(), square.getCoordX(), square.getCoordY(),
-            GridSquare.SquareSize, GridSquare.SquareSize);
+            GridSquare.SIZE, GridSquare.SIZE);
         if (square instanceof TowerSquare && ((TowerSquare) square).hasTower()) {
           GameApp.batch.draw(((TowerSquare) square).getTower().getSprite(), square.getCoordX(),
-              square.getCoordY(), GridSquare.SquareSize, GridSquare.SquareSize);
+              square.getCoordY(), GridSquare.SIZE, GridSquare.SIZE);
         }
       }
     }
   }
 
+  /**
+   * Checks whether grid was touched.
+   * 
+   * @param coordX X coordinate of the touch
+   * @param coordY Y coordinate of the touch
+   * @return Returns whether the grid was touched or not
+   */
   public boolean checkTouch(float coordX, float coordY) {
     return (coordX > offsetX && coordX < offsetX + getWidth())
         && (coordY > offsetY && coordY < offsetY + getHeight());
@@ -52,20 +65,27 @@ public abstract class Grid {
    * @return Returns square at given coordinates
    */
   public GridSquare getTouchedSquare(float coordX, float coordY) {
-    int gridX = ((int) coordX - offsetX) / GridSquare.SquareSize;
-    int gridY = ((int) coordY - offsetY) / GridSquare.SquareSize;
+    int gridX = ((int) coordX - offsetX) / GridSquare.SIZE;
+    int gridY = ((int) coordY - offsetY) / GridSquare.SIZE;
     return getSquare(gridY, gridX);
   }
 
+  /**
+   * Gets a square from the grid.
+   * 
+   * @param row Row of the square to get
+   * @param col Column of the square to get
+   * @return Returns the square requested
+   */
   public GridSquare getSquare(int row, int col) {
-    return grid[row][col];
+    return mapGrid[row][col];
   }
 
   private int getWidth() {
-    return cols * GridSquare.SquareSize;
+    return cols * GridSquare.SIZE;
   }
 
   private int getHeight() {
-    return rows * GridSquare.SquareSize;
+    return rows * GridSquare.SIZE;
   }
 }

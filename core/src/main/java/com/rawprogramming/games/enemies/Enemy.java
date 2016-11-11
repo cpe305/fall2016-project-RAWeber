@@ -9,6 +9,12 @@ import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.grid.GridSquare;
 import com.rawprogramming.games.grid.PathSquare;
 
+/**
+ * Base enemy class to be spawned.
+ * 
+ * @author Robert
+ *
+ */
 public class Enemy {
 
   private String name;
@@ -37,16 +43,16 @@ public class Enemy {
    * @param health Starting health of enemy
    * @param speed Speed of enemy
    * @param reward Reward for killing enemy
-   * @param destination Square for enemy to move towards
+   * @param spawnSquare Square to spawn enemy on
    */
-  public Enemy(String name, int health, float speed, int reward, PathSquare destination) {
+  public Enemy(String name, int health, float speed, int reward, PathSquare spawnSquare) {
     this.name = name;
     this.health = health;
-    this.speed = speed * GridSquare.SquareSize;
+    this.speed = speed * GridSquare.SIZE;
     this.reward = reward;
-    this.destination = destination;
+    this.destination = spawnSquare.getNextSquare();
     isDead = false;
-    center = new Vector2(destination.getCenter());
+    center = new Vector2(spawnSquare.getCenter());
 
     walkSheet = GameApp.manager.get(name + ".png", Texture.class);
     TextureRegion[][] tmp = TextureRegion.split(walkSheet, 32, 32);
@@ -62,15 +68,16 @@ public class Enemy {
     stateTime = 0f;
   }
 
-  private void updateDestination() {
-    // checks to see if destination is reached
-    if (destination.getCoordX() == getX() && destination.getCoordY() == getY()) {
-      destination = destination.getNextSquare();
-    }
-  }
-
+  /**
+   * Removes health from the enemy, and checks if it has died.
+   * 
+   * @param damage Amount to remove from enemies health
+   */
   public void takeHit(int damage) {
     this.health -= damage;
+    if (health <= 0) {
+      isDead = true;
+    }
   }
 
   public String getName() {
@@ -90,15 +97,41 @@ public class Enemy {
   }
 
   private int getX() {
-    return (int) (center.x - GridSquare.SquareSize / 2);
+    return (int) (center.x - GridSquare.SIZE / 2);
   }
 
   private int getY() {
-    return (int) (center.y - GridSquare.SquareSize / 2);
+    return (int) (center.y - GridSquare.SIZE / 2);
   }
 
   public boolean isDead() {
     return isDead;
+  }
+
+  /**
+   * Renders enemy on screen.
+   */
+  public void render() {
+
+    if (destination != null) {
+      Vector2 direction = destination.getCenter().sub((int) center.x, (int) center.y).nor();
+      move(direction.scl(speed * Gdx.graphics.getDeltaTime()));
+      updateDestination();
+    } else {
+      isDead = true;
+    }
+
+    stateTime += Gdx.graphics.getDeltaTime();
+    currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+    GameApp.batch.draw(currentFrame, getX(), getY(), GridSquare.SIZE / 2.0f,
+        GridSquare.SIZE / 2.0f, GridSquare.SIZE, GridSquare.SIZE, 1, 1, rotation);
+  }
+
+  private void updateDestination() {
+    // checks to see if destination is reached
+    if (destination.getCoordX() == getX() && destination.getCoordY() == getY()) {
+      destination = destination.getNextSquare();
+    }
   }
 
   private void move(Vector2 vector) {
@@ -124,24 +157,5 @@ public class Enemy {
         center = destination.getCenter();
       }
     }
-  }
-
-  /**
-   * Renders enemy on screen.
-   */
-  public void render() {
-
-    if (destination != null) {
-      Vector2 direction = destination.getCenter().sub((int) center.x, (int) center.y).nor();
-      move(direction.scl(speed * Gdx.graphics.getDeltaTime()));
-      updateDestination();
-    } else {
-      isDead = true;
-    }
-
-    stateTime += Gdx.graphics.getDeltaTime();
-    currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-    GameApp.batch.draw(currentFrame, getX(), getY(), GridSquare.SquareSize / 2.0f,
-        GridSquare.SquareSize / 2.0f, GridSquare.SquareSize, GridSquare.SquareSize, 1, 1, rotation);
   }
 }

@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Class to spawn enemies.
+ * 
+ * @author Robert
+ *
+ */
 public class Spawner {
 
   private int waveNumber;
@@ -26,6 +32,7 @@ public class Spawner {
    * @param enemiesPerWave Enemies per wave.
    * @param enemyDelay Initial spawn delay in seconds
    * @param enemyInterval Time between enemy spawns in seconds
+   * @param spawnSquare Square to spawn enemies at
    */
   public Spawner(int enemiesPerWave, int enemyDelay, int enemyInterval, PathSquare spawnSquare) {
     this.waveNumber = 1;
@@ -72,6 +79,7 @@ public class Spawner {
 
   /**
    * Checks whether there are enemies still alive
+   * 
    * @return Returns whether enemies alive.
    */
   public boolean waveComplete() {

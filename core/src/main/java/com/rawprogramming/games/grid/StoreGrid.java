@@ -3,6 +3,12 @@ package com.rawprogramming.games.grid;
 import com.badlogic.gdx.graphics.Texture;
 import com.rawprogramming.games.GameApp;
 
+/**
+ * Grid the represents a store for the user to purchase towers.
+ * 
+ * @author Robert
+ *
+ */
 public class StoreGrid extends Grid {
 
   /**
@@ -18,19 +24,21 @@ public class StoreGrid extends Grid {
     this.rows = rows;
     this.cols = cols;
 
-    grid = new GridSquare[rows][cols];
+    mapGrid = new GridSquare[rows][cols];
 
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
-        grid[row][col] = new TowerSquare(col, row, this);
+        mapGrid[row][col] = new TowerSquare(col, row, this);
       }
     }
   }
 
+  @Override
   public TowerSquare getTouchedSquare(float coordX, float coordY) {
     return (TowerSquare) super.getTouchedSquare(coordX, coordY);
   }
 
+  @Override
   public TowerSquare getSquare(int row, int col) {
     return (TowerSquare) super.getSquare(row, col);
   }
@@ -43,9 +51,10 @@ public class StoreGrid extends Grid {
     this.offsetY = offsetY;
   }
 
+  @Override
   public void render() {
     GameApp.batch.draw(GameApp.manager.get("StoreBackground.png", Texture.class), offsetX - 8.0f,
-        offsetY - 4.0f, GridSquare.SquareSize * 4.0f + 16.0f, GridSquare.SquareSize + 24.0f);
+        offsetY - 4.0f, GridSquare.SIZE * 4.0f + 16.0f, GridSquare.SIZE + 24.0f);
     super.render();
   }
 }

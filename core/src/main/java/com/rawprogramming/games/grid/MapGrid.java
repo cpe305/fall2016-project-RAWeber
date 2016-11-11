@@ -1,19 +1,24 @@
 package com.rawprogramming.games.grid;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Logger;
 import com.rawprogramming.games.screens.GameScreen;
 import com.rawprogramming.games.towers.Tower;
 
 import java.util.Scanner;
 
+/**
+ * Class representing the grid to place towers on.
+ * 
+ * @author Robert
+ *
+ */
 public class MapGrid extends Grid {
 
   private PathSquare spawnSquare;
   private GridSquare selectedSquare;
 
-  private enum TileType {
-    TOWERTILE, PATHTILE, SPAWNTILE
+  private enum SquareType {
+    TOWERSQUARE, PATHSQUARE, SPAWNSQUARE
   }
 
   /**
@@ -32,26 +37,13 @@ public class MapGrid extends Grid {
       this.rows = scanner.nextInt();
       this.cols = scanner.nextInt();
 
-      grid = new GridSquare[rows][cols];
+      mapGrid = new GridSquare[rows][cols];
 
       for (int row = 0; row < rows; row++) {
         for (int col = 0; col < cols; col++) {
-          TileType type = TileType.values()[scanner.nextInt()];
-          switch (type) {
-            case TOWERTILE:
-              grid[row][col] = new TowerSquare(col, row, this);
-              break;
-            case PATHTILE:
-              grid[row][col] = new PathSquare(col, row, this);
-              break;
-            case SPAWNTILE:
-              spawnSquare = new PathSquare(col, row, this);
-              grid[row][col] = spawnSquare;
-              break;
-            default:
-              // Error or ignore
-              break;
-          }
+          SquareType type = SquareType.values()[scanner.nextInt()];
+
+          processSquareType(type, row, col);
         }
       }
 
@@ -63,32 +55,48 @@ public class MapGrid extends Grid {
     }
   }
 
+  private void processSquareType(SquareType type, int row, int col) {
+    switch (type) {
+      case TOWERSQUARE:
+        mapGrid[row][col] = new TowerSquare(col, row, this);
+        break;
+      case PATHSQUARE:
+        mapGrid[row][col] = new PathSquare(col, row, this);
+        break;
+      case SPAWNSQUARE:
+        spawnSquare = new PathSquare(col, row, this);
+        mapGrid[row][col] = spawnSquare;
+        break;
+      default:
+        // Error or ignore
+        break;
+    }
+  }
+
   private void generatePath(PathSquare square) {
     for (int col = -1; col <= 1; col++) {
       for (int row = -1; row <= 1; row++) {
         if ((col + row) == -1 || (col + row) == 1) {
-
-          int newRow = square.getRow() + row;
-          int newCol = square.getCol() + col;
-
-          if (newRow >= 0 && newCol >= 0 && newRow < rows && newCol < cols) {
-            if (checkPath(getSquare(newRow, newCol))) {
-              PathSquare pathSquare = (PathSquare) getSquare(newRow, newCol);
-              square.setNextSquare(pathSquare);
-              generatePath(pathSquare);
-            }
-          }
+          checkPath(square, square.getRow() + row, square.getCol() + col);
         }
       }
     }
   }
 
-  private boolean checkPath(GridSquare square) {
-    return square instanceof PathSquare && ((PathSquare) square).getNextSquare() == null;
+  private void checkPath(PathSquare pathSquare, int row, int col) {
+    if (row >= 0 && col >= 0 && row < rows && col < cols) {
+      GridSquare square = getSquare(row, col);
+      if (square instanceof PathSquare && ((PathSquare) square).getNextSquare() == null) {
+        PathSquare nextSquare = (PathSquare) getSquare(row, col);
+        pathSquare.setNextSquare(nextSquare);
+        generatePath(nextSquare);
+      }
+    }
   }
 
   /**
    * Checks if square can hold tower, and places tower.
+   * 
    * @param tower Tower to place in square
    */
   public void placeTower(Tower tower) {
@@ -105,6 +113,12 @@ public class MapGrid extends Grid {
     this.selectedSquare = selectedSquare;
   }
 
+  /**
+   * Checks if square can hold a tower.
+   * 
+   * @param square Square to check
+   * @return Returns whether the square can hold a tower
+   */
   public boolean checkAvailable(GridSquare square) {
     return square instanceof TowerSquare && !((TowerSquare) square).hasTower();
   }

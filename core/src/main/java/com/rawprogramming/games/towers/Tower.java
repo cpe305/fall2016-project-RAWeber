@@ -3,6 +3,12 @@ package com.rawprogramming.games.towers;
 import com.badlogic.gdx.graphics.Texture;
 import com.rawprogramming.games.GameApp;
 
+/**
+ * Class representing a tower.
+ * 
+ * @author Robert
+ *
+ */
 public class Tower {
 
   private String name;
@@ -15,6 +21,12 @@ public class Tower {
 
   private TowerAttack attack;
 
+  /**
+   * Test constructor for a Tower.
+   * 
+   * @param name Name of the tower
+   * @param cost Cost of the tower
+   */
   public Tower(String name, int cost) {
     this.name = name;
     this.cost = cost;
@@ -39,14 +51,27 @@ public class Tower {
     this.upgrade2 = upgrade2;
   }
 
+  /**
+   * Damage the towers targets.
+   */
   public void attackTargets() {
     attack.attackTargets();
   }
 
+  /**
+   * Upgrade the towers first stat.
+   * 
+   * @param value Value to upgrade
+   */
   public void upgrade1(int value) {
     upgrade1.upgrade(this, value);
   }
 
+  /**
+   * Upgrade the towers second stat.
+   * 
+   * @param value Value to upgrade
+   */
   public void upgrade2(int value) {
     upgrade2.upgrade(this, value);
   }

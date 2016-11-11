@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.rawprogramming.games.GameApp;
 
+/**
+ * Title screen of the game.
+ * 
+ * @author Robert
+ *
+ */
 public class TitleScreen implements Screen {
 
   private final GameApp game;
@@ -23,6 +29,7 @@ public class TitleScreen implements Screen {
 
   /**
    * Constructor for TitleScreen.
+   * 
    * @param game Reference to GameApp
    */
   public TitleScreen(GameApp game) {
@@ -31,7 +38,6 @@ public class TitleScreen implements Screen {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 960, 540);
 
-    // font = game.manager.get("roughday.ttf", BitmapFont.class);
     font = new BitmapFont();
     font.getData().setScale(1.5f);
     titleText = "Welcome to TowerDefense!!!";
@@ -49,7 +55,7 @@ public class TitleScreen implements Screen {
 
   @Override
   public void show() {
-
+    // Unsupported at this time
   }
 
   @Override
@@ -75,26 +81,26 @@ public class TitleScreen implements Screen {
 
   @Override
   public void resize(int width, int height) {
-
+    // Unsupported at this time
   }
 
   @Override
   public void pause() {
-
+    // Unsupported at this time
   }
 
   @Override
   public void resume() {
-
+    // Unsupported at this time
   }
 
   @Override
   public void hide() {
-
+    // Unsupported at this time
   }
 
   @Override
   public void dispose() {
-
+    // Unsupported at this time
   }
 }
