@@ -54,7 +54,9 @@ project(":desktop") {
 
 project(":android") {
     apply plugin: "android"
-
+    apply plugin: 'jacoco-android'
+	apply from: '../sonarqube.gradle'
+	
     configurations { natives }
 
     dependencies {
@@ -70,7 +72,6 @@ project(":android") {
 
 project(":core") {
     apply plugin: "java"
-
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
