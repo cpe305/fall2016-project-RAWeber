@@ -7,11 +7,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
-        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.1'
-    }
-    
-    tasks.withType(Test) {
-        ignoreFailures = true
     }
 }
 
@@ -54,9 +49,7 @@ project(":desktop") {
 
 project(":android") {
     apply plugin: "android"
-    apply plugin: 'jacoco-android'
-	apply from: '../sonarqube.gradle'
-	
+
     configurations { natives }
 
     dependencies {
@@ -72,6 +65,7 @@ project(":android") {
 
 project(":core") {
     apply plugin: "java"
+
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"

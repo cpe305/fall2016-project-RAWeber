@@ -24,28 +24,9 @@ android {
         targetSdkVersion 22
     }
     
-    buildTypes {
-        release {
-            testCoverageEnabled false
-        }
-        debug {
-            testCoverageEnabled true
-        }
-    }
-    
     lintOptions {
     	abortOnError false
   	}
-}
-
-jacocoAndroidUnitTestReport {
-    csv.enabled false
-    html.enabled true
-    xml.enabled true
-}
-
-jacoco {
-    toolVersion = "0.7.7.201606060606"
 }
 
 
