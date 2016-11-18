@@ -14,12 +14,6 @@ plugins {
     id "org.sonarqube" version "2.2"
 }
 
-sonarqube {
-    properties {
-        property "sonar.sourceEncoding", "UTF-8"
-    }
-}
-
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
@@ -79,7 +73,8 @@ project(":android") {
 
 project(":core") {
     apply plugin: "java"
-
+    apply plugin: "jacoco"
+    apply from: './sonarqube.gradle'
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"

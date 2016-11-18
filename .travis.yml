@@ -17,4 +17,4 @@ before_install:
 - chmod +x gradlew
 
 script:
-      - ./gradlew sonarqube -Dsonar.host.url=http://smartr.cs.hm.edu:9000
+      - ./gradlew clean assembleDebug jacocoTestDebugUnitTestReport sonarqube
