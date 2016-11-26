@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.rawprogramming.games.screens.TitleScreen;
+import com.rawprogramming.games.screens.LoadScreen;
 
 /**
  * Main game, renders the screens and manages assets.
@@ -24,14 +24,14 @@ public class GameApp extends Game {
     manager.load("BasicTower.png", Texture.class);
     manager.load("BasicEnemy.png", Texture.class);
     manager.load("StoreBackground.png", Texture.class);
-
-    this.setScreen(new TitleScreen(this));
+    manager.load("Projectile.png", Texture.class);
+    
+    this.setScreen(new LoadScreen(this));
   }
 
   @Override
   public void render() {
     super.render();
-    manager.update();
   }
 
   @Override
