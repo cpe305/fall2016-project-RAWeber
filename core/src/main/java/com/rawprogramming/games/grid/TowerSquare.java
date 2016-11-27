@@ -42,5 +42,6 @@ public class TowerSquare extends GridSquare {
 
   public void setTower(Tower tower) {
     this.tower = tower;
+    tower.setPosition(getPosition());
   }
 }

@@ -36,10 +36,6 @@ public abstract class Grid {
         GridSquare square = mapGrid[row][col];
         GameApp.getSpritebatch().draw(square.getTile(), square.getCoordX(), square.getCoordY(),
             GridSquare.SIZE, GridSquare.SIZE);
-        if (square instanceof TowerSquare && ((TowerSquare) square).hasTower()) {
-          GameApp.getSpritebatch().draw(((TowerSquare) square).getTower().getSprite(),
-              square.getCoordX(), square.getCoordY(), GridSquare.SIZE, GridSquare.SIZE);
-        }
       }
     }
   }

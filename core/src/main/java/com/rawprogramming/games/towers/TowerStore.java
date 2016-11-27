@@ -21,6 +21,7 @@ public class TowerStore {
   private int money;
   private boolean isEnabled;
   private ArrayList<Tower> towers;
+  private ArrayList<Tower> boughtTowers;
   private Tower selectedTower;
   private StoreGrid grid;
 
@@ -36,6 +37,7 @@ public class TowerStore {
   public TowerStore(int money, int offsetX, int offsetY) {
     this.grid = new StoreGrid(STORE_ROWS, STORE_COLS, offsetX, offsetY);
     this.towers = new ArrayList<Tower>();
+    this.boughtTowers = new ArrayList<Tower>();
     generateTowers();
     this.money = money;
     this.isEnabled = false;
@@ -63,7 +65,9 @@ public class TowerStore {
   public Tower buyTower() {
     if (selectedTower != null && money >= selectedTower.getCost()) {
       money -= selectedTower.getCost();
-      return selectedTower;
+      Tower newTower = new Tower(selectedTower);
+      boughtTowers.add(newTower);
+      return newTower;
     }
     return null;
   }
@@ -72,7 +76,8 @@ public class TowerStore {
    * Generates tower store towers.
    */
   public void generateTowers() {
-    towers.add(new Tower("BasicTower", 50));
+    BasicAttack basicAttack = new BasicAttack(5, 2, 1);
+    towers.add(new Tower("BasicTower", 50, basicAttack));
 
     for (int i = 0; i < STORE_ROWS; i++) {
       for (int j = 0; j < STORE_COLS; j++) {
@@ -111,6 +116,10 @@ public class TowerStore {
    * Renders the tower store.
    */
   public void render() {
+    for (Tower tower : boughtTowers) {
+      tower.render();
+    }
+
     if (isEnabled) {
       grid.render();
     }
