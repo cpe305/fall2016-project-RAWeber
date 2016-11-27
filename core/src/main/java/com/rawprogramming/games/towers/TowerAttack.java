@@ -27,7 +27,8 @@ public abstract class TowerAttack {
 
   protected ArrayList<Enemy> findTargetsInRange(Vector2 position) {
     ArrayList<Enemy> tempTargets = new ArrayList<Enemy>();
-    for (Enemy enemy : Spawner.enemies) {
+    ArrayList<Enemy> enemies = Spawner.getInstance().getEnemies();
+    for (Enemy enemy : enemies) {
       if (position.dst(enemy.getCenter()) < range) {
         tempTargets.add(enemy);
       }

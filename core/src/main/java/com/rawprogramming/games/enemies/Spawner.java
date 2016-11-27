@@ -1,5 +1,6 @@
 package com.rawprogramming.games.enemies;
 
+import com.rawprogramming.games.grid.MapGrid;
 import com.rawprogramming.games.grid.PathSquare;
 
 import java.util.ArrayList;
@@ -14,34 +15,29 @@ import java.util.TimerTask;
  */
 public class Spawner {
 
+  private static Spawner instance;
+
   private int waveNumber;
   private int enemiesPerWave;
   private int enemyCounter;
   private int enemyDelay;
   private int enemyInterval;
 
-  public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+  public ArrayList<Enemy> enemies;
   private ArrayList<Enemy> deadEnemies;
   private PathSquare spawnSquare;
 
   private Timer timer;
 
-  /**
-   * Constructor for Spawner.
-   * 
-   * @param enemiesPerWave Enemies per wave.
-   * @param enemyDelay Initial spawn delay in seconds
-   * @param enemyInterval Time between enemy spawns in seconds
-   * @param spawnSquare Square to spawn enemies at
-   */
-  public Spawner(int enemiesPerWave, int enemyDelay, int enemyInterval, PathSquare spawnSquare) {
+  private Spawner() {
     this.waveNumber = 1;
-    this.enemiesPerWave = enemiesPerWave;
+    this.enemiesPerWave = 10;
     this.enemyCounter = 0;
-    this.enemyDelay = enemyDelay * 1000;
-    this.enemyInterval = enemyInterval * 1000;
+    this.enemyDelay = 1000;
+    this.enemyInterval = 1000;
     this.timer = new Timer();
-    this.spawnSquare = spawnSquare;
+    this.spawnSquare = MapGrid.getInstance().getSpawnSquare();
+    this.enemies = new ArrayList<Enemy>();
     this.deadEnemies = new ArrayList<Enemy>();
   }
 
@@ -85,6 +81,10 @@ public class Spawner {
     return enemies.isEmpty();
   }
 
+  public ArrayList<Enemy> getEnemies() {
+    return enemies;
+  }
+
   /**
    * Render all enemies that are currently alive.
    */
@@ -98,5 +98,17 @@ public class Spawner {
     }
     enemies.removeAll(deadEnemies);
     deadEnemies.clear();
+  }
+
+  /**
+   * Get instance of Spawner using singleton pattern.
+   * 
+   * @return Instance of Spawner
+   */
+  public static Spawner getInstance() {
+    if (instance == null) {
+      instance = new Spawner();
+    }
+    return instance;
   }
 }

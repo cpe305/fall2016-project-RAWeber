@@ -16,13 +16,7 @@ public abstract class Grid {
   protected int cols;
   protected GridSquare[][] mapGrid;
 
-  /**
-   * Constructor for grid.
-   * 
-   * @param offsetX Offset of grid along x axis
-   * @param offsetY Offset of grid along y axis
-   */
-  public Grid(int offsetX, int offsetY) {
+  protected Grid(int offsetX, int offsetY) {
     this.offsetX = offsetX;
     this.offsetY = offsetY;
   }

@@ -43,9 +43,9 @@ public class GameScreen implements Screen {
     camera = new OrthographicCamera();
     camera.setToOrtho(true, 960, 540);
 
-    grid = new MapGrid("Level1.level", 0, 0);
-    store = new TowerStore(200, 0, 0);
-    spawner = new Spawner(10, 0, 1, grid.getSpawnSquare());
+    grid = MapGrid.getInstance();
+    store = TowerStore.getInstance();
+    spawner = Spawner.getInstance();
   }
 
   @Override

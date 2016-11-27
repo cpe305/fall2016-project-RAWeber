@@ -1,6 +1,7 @@
 package com.rawprogramming.games.grid;
 
 import com.badlogic.gdx.Gdx;
+import com.rawprogramming.games.enemies.Spawner;
 import com.rawprogramming.games.screens.GameScreen;
 import com.rawprogramming.games.towers.Tower;
 
@@ -13,6 +14,8 @@ import java.util.Scanner;
  *
  */
 public class MapGrid extends Grid {
+  
+  private static MapGrid instance;
 
   private PathSquare spawnSquare;
   private GridSquare selectedSquare;
@@ -21,15 +24,9 @@ public class MapGrid extends Grid {
     TOWERSQUARE, PATHSQUARE, SPAWNSQUARE
   }
 
-  /**
-   * Constructor for MapGrid.
-   * 
-   * @param file File to read in grid
-   * @param offsetX Initial offset along x axis
-   * @param offsetY Initial offset along y axis
-   */
-  public MapGrid(String file, int offsetX, int offsetY) {
-    super(offsetX, offsetY);
+  private MapGrid() {
+    super(0, 0);   
+    String file = "Level1.level";
 
     try {
       Scanner scanner = new Scanner(Gdx.files.internal(file).reader());
@@ -121,5 +118,16 @@ public class MapGrid extends Grid {
    */
   public boolean checkAvailable(GridSquare square) {
     return square instanceof TowerSquare && !((TowerSquare) square).hasTower();
+  }
+  
+  /**
+   * Get instance of MapGrid using singleton pattern.
+   * @return Instance of MapGrid
+   */
+  public static MapGrid getInstance() {
+    if (instance == null) {
+      instance = new MapGrid();
+    }
+    return instance;
   }
 }

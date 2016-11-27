@@ -15,6 +15,8 @@ import java.util.ArrayList;
  */
 public class TowerStore {
 
+  private static TowerStore instance;
+
   private static final int STORE_COLS = 4;
   private static final int STORE_ROWS = 1;
 
@@ -27,20 +29,14 @@ public class TowerStore {
 
   private BitmapFont font;
 
-  /**
-   * Constructor for TowerStore.
-   * 
-   * @param money Amount of money player initially has
-   * @param offsetX Offset of towerstore along x axis
-   * @param offsetY Offset of towerstore along y axis
-   */
-  public TowerStore(int money, int offsetX, int offsetY) {
-    this.grid = new StoreGrid(STORE_ROWS, STORE_COLS, offsetX, offsetY);
+  private TowerStore() {
+    this.money = 200;
+    this.isEnabled = false;
+
+    this.grid = new StoreGrid(STORE_ROWS, STORE_COLS, 0, 0);
     this.towers = new ArrayList<Tower>();
     this.boughtTowers = new ArrayList<Tower>();
     generateTowers();
-    this.money = money;
-    this.isEnabled = false;
 
     this.font = new BitmapFont(true);
     this.font.getData().setScale(1.5f);
@@ -125,5 +121,16 @@ public class TowerStore {
     }
 
     font.draw(GameApp.getSpritebatch(), "Money: " + money, 10, 10);
+  }
+
+  /**
+   * Get instance of TowerStore using singleton pattern.
+   * @return Instance of TowerStore
+   */
+  public static TowerStore getInstance() {
+    if (instance == null) {
+      instance = new TowerStore();
+    }
+    return instance;
   }
 }
