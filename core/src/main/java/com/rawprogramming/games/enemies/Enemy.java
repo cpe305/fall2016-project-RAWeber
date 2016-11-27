@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.grid.GridSquare;
@@ -19,12 +20,14 @@ public class Enemy {
 
   private String name;
   private int health;
-  private Vector2 center;
+  private Vector2 position;
+  private Rectangle hitBox;
   private float speed;
   private int reward;
   private int rotation;
   private PathSquare destination;
   private boolean isDead;
+  private float distanceTraveled;
 
   private static final int FRAME_COLS = 2;
   private static final int FRAME_ROWS = 1;
@@ -52,7 +55,10 @@ public class Enemy {
     this.reward = reward;
     this.destination = spawnSquare.getNextSquare();
     isDead = false;
-    center = new Vector2(spawnSquare.getCenter());
+    position = new Vector2(spawnSquare.getCoordX(), spawnSquare.getCoordY());
+    hitBox = new Rectangle(spawnSquare.getCoordX(), spawnSquare.getCoordY(), GridSquare.SIZE,
+        GridSquare.SIZE);
+    distanceTraveled = 0;
 
     walkSheet = GameApp.getAssetManager().get(name + ".png", Texture.class);
     TextureRegion[][] tmp = TextureRegion.split(walkSheet, 32, 32);
@@ -97,15 +103,27 @@ public class Enemy {
   }
 
   private int getX() {
-    return (int) (center.x - GridSquare.SIZE / 2);
+    return (int) position.x;
   }
 
   private int getY() {
-    return (int) (center.y - GridSquare.SIZE / 2);
+    return (int) position.y;
+  }
+
+  public Vector2 getCenter() {
+    return hitBox.getCenter(new Vector2());
+  }
+
+  public float getDistanceTraveled() {
+    return distanceTraveled;
   }
 
   public boolean isDead() {
     return isDead;
+  }
+
+  public Rectangle getHitBox() {
+    return hitBox;
   }
 
   /**
@@ -114,7 +132,8 @@ public class Enemy {
   public void render() {
 
     if (destination != null) {
-      Vector2 direction = destination.getCenter().sub((int) center.x, (int) center.y).nor();
+      Vector2 direction = destination.getPosition().sub(position).nor();
+      rotation = (int) direction.angle() - 90;
       move(direction.scl(speed * Gdx.graphics.getDeltaTime()));
       updateDestination();
     } else {
@@ -135,26 +154,24 @@ public class Enemy {
   }
 
   private void move(Vector2 vector) {
-    center.add(vector);
+    distanceTraveled += vector.len2();
+    position.add(vector);
+    hitBox.setPosition(position);
     if (vector.x > 0) {
-      rotation = 270;
-      if (center.x > destination.getCenter().x) {
-        center = destination.getCenter();
+      if (position.x > destination.getCoordX()) {
+        position = destination.getPosition();
       }
     } else if (vector.x < 0) {
-      rotation = 90;
-      if (center.x < destination.getCenter().x) {
-        center = destination.getCenter();
+      if (position.x < destination.getCoordX()) {
+        position = destination.getPosition();
       }
     } else if (vector.y < 0) {
-      rotation = 180;
-      if (center.y < destination.getCenter().y) {
-        center = destination.getCenter();
+      if (position.y < destination.getCoordY()) {
+        position = destination.getPosition();
       }
     } else if (vector.y > 0) {
-      rotation = 0;
-      if (center.y > destination.getCenter().y) {
-        center = destination.getCenter();
+      if (position.y > destination.getCoordY()) {
+        position = destination.getPosition();
       }
     }
   }

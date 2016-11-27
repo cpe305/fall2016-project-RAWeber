@@ -20,7 +20,7 @@ public class Spawner {
   private int enemyDelay;
   private int enemyInterval;
 
-  private ArrayList<Enemy> enemies;
+  public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   private ArrayList<Enemy> deadEnemies;
   private PathSquare spawnSquare;
 
@@ -42,7 +42,6 @@ public class Spawner {
     this.enemyInterval = enemyInterval * 1000;
     this.timer = new Timer();
     this.spawnSquare = spawnSquare;
-    this.enemies = new ArrayList<Enemy>();
     this.deadEnemies = new ArrayList<Enemy>();
   }
 
@@ -68,7 +67,7 @@ public class Spawner {
    * Spawns an enemy.
    */
   public void spawnEnemy() {
-    Enemy enemy = new Enemy("BasicEnemy", 50, 3, 10, spawnSquare);
+    Enemy enemy = new Enemy("BasicEnemy", 10, 1, 10, spawnSquare);
     enemies.add(enemy);
     this.enemyCounter++;
 
