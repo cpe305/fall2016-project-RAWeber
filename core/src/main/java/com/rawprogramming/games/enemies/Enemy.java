@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.grid.GridSquare;
 import com.rawprogramming.games.grid.PathSquare;
+import com.rawprogramming.games.grid.StoreGrid;
+import com.rawprogramming.games.towers.TowerStore;
 
 /**
  * Base enemy class to be spawned.
@@ -83,6 +85,7 @@ public class Enemy {
     this.health -= damage;
     if (health <= 0) {
       isDead = true;
+      TowerStore.getInstance().addMoney(reward);
     }
   }
 
