@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Logger;
 import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.enemies.Spawner;
 import com.rawprogramming.games.grid.GridSquare;
@@ -20,8 +19,6 @@ import com.rawprogramming.games.towers.TowerStore;
  *
  */
 public class GameScreen implements Screen {
-
-  public static final Logger lgr = new Logger("GameScreen");
 
   private final GameApp game;
 

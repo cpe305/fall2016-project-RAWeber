@@ -1,7 +1,6 @@
 package com.rawprogramming.games.grid;
 
 import com.badlogic.gdx.Gdx;
-import com.rawprogramming.games.enemies.Spawner;
 import com.rawprogramming.games.screens.GameScreen;
 import com.rawprogramming.games.towers.Tower;
 
@@ -48,7 +47,7 @@ public class MapGrid extends Grid {
 
       scanner.close();
     } catch (Exception exception) {
-      GameScreen.lgr.error("Level input file not correct format", exception);
+      Gdx.app.error("MapGrid", "Level input file not correct format", exception);
     }
   }
 
