@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.rawprogramming.games.Animator;
 import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.enemies.Enemy;
 import com.rawprogramming.games.grid.GridSquare;
@@ -19,6 +20,7 @@ public class Projectile {
   private Rectangle hitbox;
   private float rotation;
   private TextureRegion sprite;
+  private Animator animation;
 
   /**
    * Constructor for Projectile.
@@ -49,21 +51,35 @@ public class Projectile {
   private void applyDamage() {
     target.takeHit(damage);
     impacted = true;
+    animation = new Animator("Impact.png", position, 2, 2, 16, false, GridSquare.SIZE / 2,
+        GridSquare.SIZE / 2, 0);
+  }
+  
+  private void destroyDud(){
+    impacted = true;
+    animation = new Animator("Dud.png", position, 2, 2, 16, false, GridSquare.SIZE / 2,
+        GridSquare.SIZE / 2, 0);
   }
 
   public boolean hasImpacted() {
-    return impacted;
+    return impacted && animation != null && animation.isFinished();
   }
 
   /**
    * Renders the projectile.
    */
   public void render() {
-    moveToTarget();
-    if (hitbox.overlaps(target.getHitBox())) {
-      applyDamage();
+    if (!impacted) {
+      moveToTarget();
+      if (hitbox.overlaps(target.getHitBox())) {
+        applyDamage();
+      } else if (target.isDead()) {
+        destroyDud();
+      }
+      GameApp.getSpritebatch().draw(sprite, hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2,
+          hitbox.width, hitbox.height, 1.0f, 1.0f, rotation);
+    } else {
+      animation.render();
     }
-    GameApp.getSpritebatch().draw(sprite, hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2,
-        hitbox.width, hitbox.height, 1.0f, 1.0f, rotation);
   }
 }

@@ -36,7 +36,7 @@ public class BasicAttack extends TowerAttack {
   @Override
   protected ArrayList<Enemy> findTargets(ArrayList<Enemy> tempTargets) {
     ArrayList<Enemy> targets = new ArrayList<Enemy>();
-    if (tempTargets.size() > 0) {
+    if (!tempTargets.isEmpty()) {
       Enemy target = tempTargets.get(0);
       for (Enemy enemy : tempTargets) {
         if (enemy.getDistanceTraveled() > target.getDistanceTraveled()) {

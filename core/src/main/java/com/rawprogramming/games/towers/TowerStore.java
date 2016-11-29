@@ -72,8 +72,10 @@ public class TowerStore {
    * Generates tower store towers.
    */
   public void generateTowers() {
-    BasicAttack basicAttack = new BasicAttack(5, 2, 1);
-    towers.add(new Tower("BasicTower", 50, basicAttack));
+    towers.add(new Tower("BasicTower", 50, new BasicAttack(5, 2, 1)));
+    towers.add(new Tower("StrongTower", 50, new BasicAttack(10, 1.5f, 1.5f)));
+    towers.add(new Tower("AreaTower", 50, new AreaAttack(5, 1, 2)));
+    towers.add(new Tower("StrongAreaTower", 50, new AreaAttack(10, 1, 2.5f)));
 
     for (int i = 0; i < STORE_ROWS; i++) {
       for (int j = 0; j < STORE_COLS; j++) {
