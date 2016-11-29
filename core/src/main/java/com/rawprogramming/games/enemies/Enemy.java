@@ -1,15 +1,12 @@
 package com.rawprogramming.games.enemies;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.rawprogramming.games.Animator;
 import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.grid.GridSquare;
 import com.rawprogramming.games.grid.PathSquare;
-import com.rawprogramming.games.grid.StoreGrid;
 import com.rawprogramming.games.towers.TowerStore;
 
 /**
@@ -30,16 +27,7 @@ public class Enemy {
   private PathSquare destination;
   private boolean isDead;
   private float distanceTraveled;
-
-  private static final int FRAME_COLS = 2;
-  private static final int FRAME_ROWS = 1;
-
-  private Animation walkAnimation;
-  private Texture walkSheet;
-  private TextureRegion[] walkFrames;
-  private TextureRegion currentFrame;
-
-  private float stateTime;
+  private Animator animation;
 
   /**
    * Constructor for Enemy.
@@ -56,24 +44,13 @@ public class Enemy {
     this.speed = speed * GridSquare.SIZE;
     this.reward = reward;
     this.destination = spawnSquare.getNextSquare();
-    isDead = false;
-    position = new Vector2(spawnSquare.getCoordX(), spawnSquare.getCoordY());
-    hitBox = new Rectangle(spawnSquare.getCoordX(), spawnSquare.getCoordY(), GridSquare.SIZE,
+    this.isDead = false;
+    this.position = new Vector2(spawnSquare.getCoordX(), spawnSquare.getCoordY());
+    this.hitBox = new Rectangle(spawnSquare.getCoordX(), spawnSquare.getCoordY(), GridSquare.SIZE,
         GridSquare.SIZE);
-    distanceTraveled = 0;
-
-    walkSheet = GameApp.getAssetManager().get(name + ".png", Texture.class);
-    TextureRegion[][] tmp = TextureRegion.split(walkSheet, 32, 32);
-    walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-
-    int index = 0;
-    for (int i = 0; i < FRAME_ROWS; i++) {
-      for (int j = 0; j < FRAME_COLS; j++) {
-        walkFrames[index++] = tmp[i][j];
-      }
-    }
-    walkAnimation = new Animation(0.25f, walkFrames);
-    stateTime = 0f;
+    this.distanceTraveled = 0;
+    this.animation = new Animator("BasicEnemy.png", position, 2, 1, 4, true, GridSquare.SIZE,
+        GridSquare.SIZE, 0);
   }
 
   /**
@@ -142,11 +119,9 @@ public class Enemy {
     } else {
       isDead = true;
     }
-
-    stateTime += Gdx.graphics.getDeltaTime();
-    currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-    GameApp.getSpritebatch().draw(currentFrame, getX(), getY(), GridSquare.SIZE / 2.0f,
-        GridSquare.SIZE / 2.0f, GridSquare.SIZE, GridSquare.SIZE, 1, 1, rotation);
+    animation.setPosition(position);
+    animation.setRotation(rotation);
+    animation.render();
   }
 
   private void updateDestination() {
