@@ -49,7 +49,7 @@ public class Enemy {
     this.hitBox = new Rectangle(spawnSquare.getCoordX(), spawnSquare.getCoordY(), GridSquare.SIZE,
         GridSquare.SIZE);
     this.distanceTraveled = 0;
-    this.animation = new Animator("BasicEnemy.png", position, 2, 1, 4, true, GridSquare.SIZE,
+    this.animation = new Animator(name + ".png", position, 2, 2, 8, true, GridSquare.SIZE,
         GridSquare.SIZE, 0);
   }
 
