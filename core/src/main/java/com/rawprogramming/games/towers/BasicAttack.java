@@ -29,7 +29,7 @@ public class BasicAttack extends TowerAttack {
     ArrayList<Enemy> targets = findTargets(tempTargets);
 
     for (Enemy enemy : targets) {
-      projectiles.add(new Projectile(position, enemy, damage, 2));
+      projectiles.add(new Projectile(position, enemy, damage, 2, 200));
     }
   }
 

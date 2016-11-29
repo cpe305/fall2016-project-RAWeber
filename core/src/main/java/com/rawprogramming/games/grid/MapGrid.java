@@ -1,6 +1,8 @@
 package com.rawprogramming.games.grid;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.towers.Tower;
 
 import java.util.Scanner;
@@ -12,7 +14,7 @@ import java.util.Scanner;
  *
  */
 public class MapGrid extends Grid {
-  
+
   private static MapGrid instance;
 
   private PathSquare spawnSquare;
@@ -23,7 +25,7 @@ public class MapGrid extends Grid {
   }
 
   private MapGrid() {
-    super(0, 0);   
+    super(0, 0);
     String file = "Level1.level";
 
     try {
@@ -32,7 +34,7 @@ public class MapGrid extends Grid {
       this.rows = scanner.nextInt();
       this.cols = scanner.nextInt();
 
-      mapGrid = new GridSquare[rows][cols];
+      gridMap = new GridSquare[rows][cols];
 
       for (int row = 0; row < rows; row++) {
         for (int col = 0; col < cols; col++) {
@@ -53,14 +55,14 @@ public class MapGrid extends Grid {
   private void processSquareType(SquareType type, int row, int col) {
     switch (type) {
       case TOWERSQUARE:
-        mapGrid[row][col] = new TowerSquare(col, row, this);
+        gridMap[row][col] = new TowerSquare(col, row, this);
         break;
       case PATHSQUARE:
-        mapGrid[row][col] = new PathSquare(col, row, this);
+        gridMap[row][col] = new PathSquare(col, row, this);
         break;
       case SPAWNSQUARE:
         spawnSquare = new PathSquare(col, row, this);
-        mapGrid[row][col] = spawnSquare;
+        gridMap[row][col] = spawnSquare;
         break;
       default:
         // Error or ignore
@@ -104,6 +106,10 @@ public class MapGrid extends Grid {
     return spawnSquare;
   }
 
+  public GridSquare getSelectedSquare() {
+    return selectedSquare;
+  }
+
   public void setSelectedSquare(GridSquare selectedSquare) {
     this.selectedSquare = selectedSquare;
   }
@@ -117,9 +123,26 @@ public class MapGrid extends Grid {
   public boolean checkAvailable(GridSquare square) {
     return square instanceof TowerSquare && !((TowerSquare) square).hasTower();
   }
-  
+
+  @Override
+  public void render() {
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        GridSquare square = gridMap[row][col];
+        GameApp.getSpritebatch().draw(square.getTile(), square.getCoordX(), square.getCoordY(),
+            GridSquare.SIZE, GridSquare.SIZE);
+        if (square == selectedSquare) {
+          GameApp.getSpritebatch().draw(
+              GameApp.getAssetManager().get("SelectedTower.png", Texture.class), square.getCoordX(),
+              square.getCoordY(), GridSquare.SIZE, GridSquare.SIZE);
+        }
+      }
+    }
+  }
+
   /**
    * Get instance of MapGrid using singleton pattern.
+   * 
    * @return Instance of MapGrid
    */
   public static MapGrid getInstance() {

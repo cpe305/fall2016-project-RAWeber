@@ -73,9 +73,9 @@ public class TowerStore {
    */
   public void generateTowers() {
     towers.add(new Tower("BasicTower", 50, new BasicAttack(5, 2, 1)));
-    towers.add(new Tower("StrongTower", 50, new BasicAttack(10, 1.5f, 1.5f)));
-    towers.add(new Tower("AreaTower", 50, new AreaAttack(5, 1, 2)));
-    towers.add(new Tower("StrongAreaTower", 50, new AreaAttack(10, 1, 2.5f)));
+    towers.add(new Tower("StrongTower", 100, new BasicAttack(10, 1.5f, 1.5f)));
+    towers.add(new Tower("AreaTower", 100, new AreaAttack(5, 1, 2)));
+    towers.add(new Tower("StrongAreaTower", 250, new AreaAttack(10, 1, 2.5f)));
 
     for (int i = 0; i < STORE_ROWS; i++) {
       for (int j = 0; j < STORE_COLS; j++) {
@@ -84,6 +84,10 @@ public class TowerStore {
         }
       }
     }
+  }
+
+  public int getMoney() {
+    return money;
   }
 
   /**
@@ -102,12 +106,9 @@ public class TowerStore {
   public boolean isEnabled() {
     return isEnabled;
   }
-
-  /**
-   * Toggles whether the store is visible.
-   */
-  public void toggleEnabled() {
-    isEnabled = !isEnabled;
+  
+  public void setEnabled(boolean isEnabled) {
+    this.isEnabled = isEnabled;
   }
 
   /**
@@ -127,6 +128,7 @@ public class TowerStore {
 
   /**
    * Get instance of TowerStore using singleton pattern.
+   * 
    * @return Instance of TowerStore
    */
   public static TowerStore getInstance() {

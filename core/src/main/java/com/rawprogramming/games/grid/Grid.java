@@ -14,25 +14,14 @@ public abstract class Grid {
   protected int offsetY;
   protected int rows;
   protected int cols;
-  protected GridSquare[][] mapGrid;
+  protected GridSquare[][] gridMap;
 
   protected Grid(int offsetX, int offsetY) {
     this.offsetX = offsetX;
     this.offsetY = offsetY;
   }
 
-  /**
-   * Renders the grid on screen.
-   */
-  public void render() {
-    for (int row = 0; row < rows; row++) {
-      for (int col = 0; col < cols; col++) {
-        GridSquare square = mapGrid[row][col];
-        GameApp.getSpritebatch().draw(square.getTile(), square.getCoordX(), square.getCoordY(),
-            GridSquare.SIZE, GridSquare.SIZE);
-      }
-    }
-  }
+  public abstract void render();
 
   /**
    * Checks whether grid was touched.
@@ -68,7 +57,7 @@ public abstract class Grid {
    * @return Returns the square requested
    */
   public GridSquare getSquare(int row, int col) {
-    return mapGrid[row][col];
+    return gridMap[row][col];
   }
 
   private int getWidth() {

@@ -81,18 +81,21 @@ public class GameScreen implements Screen {
     if (grid.checkTouch(touchPos.x, touchPos.y)) {
       GridSquare square = grid.getTouchedSquare(touchPos.x, touchPos.y);
 
-      if (!store.isEnabled()) {
-        grid.setSelectedSquare(square);
-        if (grid.checkAvailable(square)) {
+      if (store.isEnabled() && store.getGrid().checkTouch(touchPos.x, touchPos.y)) {
+        store.selectTower(touchPos.x, touchPos.y);
+        grid.placeTower(store.buyTower());
+        store.setEnabled(false);
+        grid.setSelectedSquare(null);
+      } else {
+        if (store.isEnabled() && square == grid.getSelectedSquare()
+            || !grid.checkAvailable(square)) {
+          store.setEnabled(false);
+          grid.setSelectedSquare(null);
+        } else {
+          grid.setSelectedSquare(square);
           store.getGrid().setOffsetX(square.getCoordX() - GridSquare.SIZE * 3 / 2);
           store.getGrid().setOffsetY(square.getCoordY() - GridSquare.SIZE * 3 / 2);
-          store.toggleEnabled();
-        }
-      } else {
-        store.toggleEnabled();
-        if (store.getGrid().checkTouch(touchPos.x, touchPos.y)) {
-          store.selectTower(touchPos.x, touchPos.y);
-          grid.placeTower(store.buyTower());
+          store.setEnabled(true);
         }
       }
     }

@@ -2,6 +2,7 @@ package com.rawprogramming.games.grid;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.rawprogramming.games.GameApp;
+import com.rawprogramming.games.towers.TowerStore;
 
 /**
  * Grid the represents a store for the user to purchase towers.
@@ -24,11 +25,11 @@ public class StoreGrid extends Grid {
     this.rows = rows;
     this.cols = cols;
 
-    mapGrid = new GridSquare[rows][cols];
+    gridMap = new GridSquare[rows][cols];
 
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
-        mapGrid[row][col] = new TowerSquare(col, row, this);
+        gridMap[row][col] = new TowerSquare(col, row, this);
       }
     }
   }
@@ -45,7 +46,7 @@ public class StoreGrid extends Grid {
 
   public void setOffsetX(int offsetX) {
     this.offsetX = offsetX;
-    
+
   }
 
   public void setOffsetY(int offsetY) {
@@ -57,17 +58,19 @@ public class StoreGrid extends Grid {
     GameApp.getSpritebatch().draw(
         GameApp.getAssetManager().get("StoreBackground.png", Texture.class), offsetX - 8.0f,
         offsetY - 4.0f, GridSquare.SIZE * 4.0f + 16.0f, GridSquare.SIZE + 24.0f);
-    
-    super.render();
-    
+
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
-        GridSquare square = mapGrid[row][col];
-        if (square instanceof TowerSquare && ((TowerSquare) square).hasTower()) {
-          ((TowerSquare) square).getTower().setPosition(square.getPosition());
-          ((TowerSquare) square).getTower().render();
+        TowerSquare square = (TowerSquare) gridMap[row][col];
+        if (square.getTower().getCost() > TowerStore.getInstance().getMoney()) {
+          GameApp.getSpritebatch().setColor(1, 0, 0, 1f);
         }
+        GameApp.getSpritebatch().draw(square.getTile(), square.getCoordX(), square.getCoordY(),
+            GridSquare.SIZE, GridSquare.SIZE);
+        ((TowerSquare) square).getTower().setPosition(square.getPosition());
+        square.getTower().render();
       }
     }
+    GameApp.getSpritebatch().setColor(1, 1, 1, 1);
   }
 }

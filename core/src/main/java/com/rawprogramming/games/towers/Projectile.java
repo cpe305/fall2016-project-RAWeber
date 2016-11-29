@@ -21,6 +21,7 @@ public class Projectile {
   private float rotation;
   private TextureRegion sprite;
   private Animator animation;
+  private float maxDistance;
 
   /**
    * Constructor for Projectile.
@@ -30,11 +31,12 @@ public class Projectile {
    * @param damage Damage of projectile
    * @param speed Speed of projectile
    */
-  public Projectile(Vector2 position, Enemy target, int damage, float speed) {
+  public Projectile(Vector2 position, Enemy target, int damage, float speed, float maxDistance) {
     this.position = new Vector2(position);
     this.target = target;
     this.damage = damage;
     this.speed = speed;
+    this.maxDistance = maxDistance;
     impacted = false;
     hitbox = new Rectangle(position.x, position.y, GridSquare.SIZE / 4, GridSquare.SIZE / 4);
     sprite = new TextureRegion(GameApp.getAssetManager().get("Projectile.png", Texture.class));
@@ -44,8 +46,11 @@ public class Projectile {
   private void moveToTarget() {
     Vector2 direction = new Vector2(target.getCenter()).sub(position).nor();
     rotation = direction.angle() - 90;
-    position.add(direction.scl(speed * GridSquare.SIZE * Gdx.graphics.getDeltaTime()));
+    direction.scl(speed * GridSquare.SIZE * Gdx.graphics.getDeltaTime());
+    speed += 0.1f;
+    position.add(direction);
     hitbox.setPosition(position);
+    maxDistance -= direction.len();
   }
 
   private void applyDamage() {
@@ -73,7 +78,7 @@ public class Projectile {
       moveToTarget();
       if (hitbox.overlaps(target.getHitBox())) {
         applyDamage();
-      } else if (target.isDead()) {
+      } else if (target.isDead() || maxDistance < 0) {
         destroyDud();
       }
       GameApp.getSpritebatch().draw(sprite, hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2,

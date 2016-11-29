@@ -40,8 +40,14 @@ public class TowerSquare extends GridSquare {
     return tower;
   }
 
+  /**
+   * Sets square's tower.
+   * @param tower Tower to place in square
+   */
   public void setTower(Tower tower) {
     this.tower = tower;
-    tower.setPosition(getPosition());
+    if (tower != null) {
+      tower.setPosition(getPosition());
+    }
   }
 }
