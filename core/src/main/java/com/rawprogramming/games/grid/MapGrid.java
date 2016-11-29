@@ -1,7 +1,6 @@
 package com.rawprogramming.games.grid;
 
 import com.badlogic.gdx.Gdx;
-import com.rawprogramming.games.screens.GameScreen;
 import com.rawprogramming.games.towers.Tower;
 
 import java.util.Scanner;
