@@ -22,7 +22,6 @@ public class GameApp extends Game {
     manager.load("TowerTile.png", Texture.class);
     manager.load("PathTile.png", Texture.class);
     manager.load("BasicTower.png", Texture.class);
-    manager.load("BasicEnemy.png", Texture.class);
     manager.load("StoreBackground.png", Texture.class);
     manager.load("Projectile.png", Texture.class);
     manager.load("Impact.png", Texture.class);
@@ -31,6 +30,11 @@ public class GameApp extends Game {
     manager.load("StrongTower.png", Texture.class);
     manager.load("AreaTower.png", Texture.class);
     manager.load("StrongAreaTower.png", Texture.class);
+    manager.load("SelectedTower.png", Texture.class);
+    manager.load("BasicEnemy.png", Texture.class);
+    manager.load("FastEnemy.png", Texture.class);
+    manager.load("StrongEnemy.png", Texture.class);
+
     
     this.setScreen(new LoadScreen(this));
   }
