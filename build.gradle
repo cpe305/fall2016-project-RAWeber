@@ -83,6 +83,8 @@ project(":core") {
 
 project(":tests") {
     apply plugin: "java"
+    apply plugin: "jacoco"
+    apply from: './sonarqube.gradle'
 
     sourceSets.test.java.srcDirs = ["src/"]
 
