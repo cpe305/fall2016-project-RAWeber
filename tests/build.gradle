@@ -20,7 +20,3 @@ sourceSets {
 eclipse.project {
     name = appName + "-tests"
 }
-
-jacoco {
-    toolVersion = "0.7.7.201606060606"
-}
