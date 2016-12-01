@@ -75,6 +75,10 @@ public class GameScreen implements Screen {
     if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && spawner.waveComplete()) {
       spawner.sendWave();
     }
+
+    if (spawner.isGameOver()) {
+      game.setScreen(new GameOverScreen(game));
+    }
   }
 
   private void processGridTouch(Vector3 touchPos) {

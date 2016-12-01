@@ -6,14 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.rawprogramming.games.GameApp;
+import com.rawprogramming.games.enemies.Spawner;
+import com.rawprogramming.games.grid.MapGrid;
+import com.rawprogramming.games.towers.TowerStore;
 
-/**
- * Title screen of the game.
- * 
- * @author Robert
- *
- */
-public class TitleScreen implements Screen {
+public class GameOverScreen  implements Screen {
 
   private final GameApp game;
 
@@ -31,14 +28,14 @@ public class TitleScreen implements Screen {
    * 
    * @param game Reference to GameApp
    */
-  public TitleScreen(GameApp game) {
+  public GameOverScreen(GameApp game) {
     this.game = game;
 
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 960, 540);
     background = GameApp.getAssetManager().get("TowerTile.png", Texture.class);
-    titleTexture = GameApp.getAssetManager().get("TitleText.png", Texture.class);
-    startTexture = GameApp.getAssetManager().get("StartText.png", Texture.class);
+    titleTexture = GameApp.getAssetManager().get("GameOverText.png", Texture.class);
+    startTexture = GameApp.getAssetManager().get("StartOverText.png", Texture.class);
 
     titleWidth = titleTexture.getWidth();
     startWidth = startTexture.getWidth();
@@ -67,8 +64,8 @@ public class TitleScreen implements Screen {
     GameApp.getSpritebatch().end();
 
     if (Gdx.input.isTouched()) {
-      game.setScreen(new GameScreen(game));
       dispose();
+      game.setScreen(new GameScreen(game));
     }
   }
 
@@ -94,6 +91,8 @@ public class TitleScreen implements Screen {
 
   @Override
   public void dispose() {
-    // Unsupported at this time
+    MapGrid.clear();
+    Spawner.clear();
+    TowerStore.clear();
   }
 }

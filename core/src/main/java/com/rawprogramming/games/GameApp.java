@@ -34,7 +34,10 @@ public class GameApp extends Game {
     manager.load("BasicEnemy.png", Texture.class);
     manager.load("FastEnemy.png", Texture.class);
     manager.load("StrongEnemy.png", Texture.class);
-
+    manager.load("TitleText.png", Texture.class);
+    manager.load("StartText.png", Texture.class);
+    manager.load("StartOverText.png", Texture.class);
+    manager.load("GameOverText.png", Texture.class);
     
     this.setScreen(new LoadScreen(this));
   }
