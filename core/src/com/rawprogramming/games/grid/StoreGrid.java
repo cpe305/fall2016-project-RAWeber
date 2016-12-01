@@ -74,7 +74,7 @@ public class StoreGrid extends Grid {
         square.getTower().setPosition(square.getPosition());
         square.getTower().render();
         font.draw(GameApp.getSpritebatch(), Integer.toString(square.getTower().getCost()),
-            square.getCoordX(), square.getCoordY() + GridSquare.SIZE * 3 / 4);
+            square.getCoordX(), square.getCoordY() + GridSquare.SIZE * 3 / 4f);
       }
     }
     GameApp.getSpritebatch().setColor(1, 1, 1, 1);

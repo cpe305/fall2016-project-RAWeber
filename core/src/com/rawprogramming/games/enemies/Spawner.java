@@ -27,7 +27,7 @@ public class Spawner {
   private int enemyInterval;
   private boolean gameOver;
 
-  public ArrayList<Enemy> spawnedEnemies;
+  private ArrayList<Enemy> spawnedEnemies;
   private ArrayList<Enemy> deadEnemies;
   private PathSquare spawnSquare;
 
