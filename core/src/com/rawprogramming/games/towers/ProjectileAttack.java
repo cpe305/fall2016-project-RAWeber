@@ -4,11 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.rawprogramming.games.enemies.Enemy;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class BasicAttack extends TowerAttack {
+public class ProjectileAttack extends TowerAttack {
 
   private ArrayList<Projectile> projectiles;
-  private ArrayList<Projectile> projectilesToRemove;
 
   /**
    * Constructor for BasicAttack.
@@ -17,10 +17,9 @@ public class BasicAttack extends TowerAttack {
    * @param range Range of attack
    * @param attackDelay Delay between attacks
    */
-  public BasicAttack(int damage, float range, float attackDelay) {
+  public ProjectileAttack(int damage, float range, float attackDelay) {
     super(damage, range, attackDelay);
     projectiles = new ArrayList<Projectile>();
-    projectilesToRemove = new ArrayList<Projectile>();
   }
 
   @Override
@@ -52,14 +51,19 @@ public class BasicAttack extends TowerAttack {
 
   @Override
   public void render() {
-    for (Projectile projectile : projectiles) {
+    Iterator<Projectile> iter = projectiles.iterator();
+    while(iter.hasNext()){
+      Projectile projectile = iter.next();
       if (projectile.hasImpacted()) {
-        projectilesToRemove.add(projectile);
+        iter.remove();
       } else {
         projectile.render();
       }
     }
-    projectiles.remove(projectilesToRemove);
-    projectilesToRemove.clear();
+  }
+  
+  @Override
+  public TowerAttack getCopy(){
+    return new ProjectileAttack(damage, range, attackDelay);
   }
 }

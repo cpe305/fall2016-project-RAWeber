@@ -113,7 +113,7 @@ public class Tower {
   }
 
   public TowerAttack getAttack() {
-    return attack;
+    return attack.getCopy();
   }
 
   /**

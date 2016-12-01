@@ -10,7 +10,7 @@ public abstract class TowerAttack {
 
   protected int damage;
   protected float range;
-  private float attackDelay;
+  protected float attackDelay;
 
   /**
    * Constuctor for TowerAttack.
@@ -20,16 +20,16 @@ public abstract class TowerAttack {
    * @param attackDelay Delay between attacks
    */
   public TowerAttack(int damage, float range, float attackDelay) {
-    this.range = range * 100;
+    this.range = range;
     this.damage = damage;
-    this.attackDelay = attackDelay * 1000;
+    this.attackDelay = attackDelay;
   }
 
   protected ArrayList<Enemy> findTargetsInRange(Vector2 position) {
     ArrayList<Enemy> tempTargets = new ArrayList<Enemy>();
     ArrayList<Enemy> enemies = Spawner.getInstance().getEnemies();
     for (Enemy enemy : enemies) {
-      if (position.dst(enemy.getCenter()) < range) {
+      if (position.dst(enemy.getCenter()) < range * 100) {
         tempTargets.add(enemy);
       }
     }
@@ -43,6 +43,8 @@ public abstract class TowerAttack {
   public abstract void render();
 
   public int getAttackDelay() {
-    return (int)attackDelay;
+    return (int)attackDelay * 1000;
   }
+  
+  public abstract TowerAttack getCopy();
 }

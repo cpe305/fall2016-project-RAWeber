@@ -4,11 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.rawprogramming.games.enemies.Enemy;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class AreaAttack extends TowerAttack {
 
   private ArrayList<Explosion> explosions;
-  private ArrayList<Explosion> explosionsToRemove;
 
   /**
    * Constructor for AreaAttack.
@@ -20,7 +20,6 @@ public class AreaAttack extends TowerAttack {
   public AreaAttack(int damage, float range, float attackDelay) {
     super(damage, range, attackDelay);
     explosions = new ArrayList<Explosion>();
-    explosionsToRemove = new ArrayList<Explosion>();
   }
 
   @Override
@@ -42,14 +41,19 @@ public class AreaAttack extends TowerAttack {
 
   @Override
   public void render() {
-    for (Explosion explosion : explosions) {
+    Iterator<Explosion> iter = explosions.iterator();
+    while(iter.hasNext()){
+      Explosion explosion = iter.next();
       if (explosion.isFinished()) {
-        explosionsToRemove.add(explosion);
+        iter.remove();
       } else {
         explosion.render();
       }
     }
-    explosions.remove(explosionsToRemove);
-    explosionsToRemove.clear();
+  }
+
+  @Override
+  public AreaAttack getCopy(){
+    return new AreaAttack(damage, range, attackDelay);
   }
 }
