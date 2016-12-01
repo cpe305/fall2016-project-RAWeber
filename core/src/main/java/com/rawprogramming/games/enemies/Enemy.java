@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.rawprogramming.games.Animator;
-import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.grid.GridSquare;
 import com.rawprogramming.games.grid.PathSquare;
 import com.rawprogramming.games.towers.TowerStore;
@@ -26,6 +25,7 @@ public class Enemy {
   private int rotation;
   private PathSquare destination;
   private boolean isDead;
+  private boolean reachedEnd;
   private float distanceTraveled;
   private Animator animation;
 
@@ -45,12 +45,13 @@ public class Enemy {
     this.reward = reward;
     this.destination = spawnSquare.getNextSquare();
     this.isDead = false;
+    this.reachedEnd = false;
     this.position = new Vector2(spawnSquare.getCoordX(), spawnSquare.getCoordY());
     this.hitBox = new Rectangle(spawnSquare.getCoordX(), spawnSquare.getCoordY(), GridSquare.SIZE,
         GridSquare.SIZE);
     this.distanceTraveled = 0;
-    this.animation = new Animator(name + ".png", position, 2, 2, 8, true, GridSquare.SIZE,
-        GridSquare.SIZE, 0);
+    this.animation =
+        new Animator(name + ".png", position, 2, 2, 8, true, GridSquare.SIZE, GridSquare.SIZE, 0);
   }
 
   /**
@@ -102,6 +103,10 @@ public class Enemy {
     return isDead;
   }
 
+  public boolean hasReachedEnd() {
+    return reachedEnd;
+  }
+
   public Rectangle getHitBox() {
     return hitBox;
   }
@@ -118,6 +123,8 @@ public class Enemy {
       updateDestination();
     } else {
       isDead = true;
+      reachedEnd = true;
+
     }
     animation.setPosition(position);
     animation.setRotation(rotation);
@@ -132,7 +139,7 @@ public class Enemy {
   }
 
   private void move(Vector2 vector) {
-    distanceTraveled += vector.len2();
+    distanceTraveled += vector.len();
     position.add(vector);
     hitBox.setPosition(position);
     if (vector.x > 0) {

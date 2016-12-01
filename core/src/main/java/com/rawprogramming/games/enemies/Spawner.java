@@ -1,14 +1,14 @@
 package com.rawprogramming.games.enemies;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.grid.MapGrid;
 import com.rawprogramming.games.grid.PathSquare;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Class to spawn enemies.
@@ -25,6 +25,7 @@ public class Spawner {
   private int enemyCounter;
   private int enemyDelay;
   private int enemyInterval;
+  private boolean gameOver;
 
   public ArrayList<Enemy> spawnedEnemies;
   private ArrayList<Enemy> deadEnemies;
@@ -43,7 +44,8 @@ public class Spawner {
     this.spawnSquare = MapGrid.getInstance().getSpawnSquare();
     this.spawnedEnemies = new ArrayList<Enemy>();
     this.deadEnemies = new ArrayList<Enemy>();
-    
+    this.gameOver = false;
+
 
     this.font = new BitmapFont(true);
     this.font.getData().setScale(1.5f);
@@ -56,9 +58,14 @@ public class Spawner {
    */
   public void sendWave() {
     waveNumber++;
-    
+
     timer = new Timer();
-    TimerTask spawnEnemy = new ScheduledSpawner(this);
+    TimerTask spawnEnemy = new TimerTask() {
+      @Override
+      public void run() {
+        spawnEnemy();
+      }
+    };
     timer.scheduleAtFixedRate(spawnEnemy, enemyDelay, enemyInterval);
   }
 
@@ -79,18 +86,26 @@ public class Spawner {
     Enemy enemy;
 
     if (spawnIndex < 0.6f) {
-      enemy = new Enemy("BasicEnemy", 15 * (1 + waveNumber / 4), 1.5f, 10, spawnSquare);
+      enemy = new Enemy("BasicEnemy", calculateWaveModifier(15), 1.5f, 10, spawnSquare);
     } else if (spawnIndex < 0.9) {
-      enemy = new Enemy("FastEnemy", 10 * (1 + waveNumber / 4), 2f, 5, spawnSquare);
+      enemy = new Enemy("FastEnemy", calculateWaveModifier(10), 2f, 5, spawnSquare);
     } else {
-      enemy = new Enemy("StrongEnemy", 25 * (1 + waveNumber / 4), 1f, 15, spawnSquare);
+      enemy = new Enemy("StrongEnemy", calculateWaveModifier(25), 1f, 15, spawnSquare);
     }
     spawnedEnemies.add(enemy);
     this.enemyCounter++;
 
-    if (this.enemyCounter >= waveNumber * enemiesPerWave) {
+    if (this.enemyCounter >= calculateWaveEnemies()) {
       stopWave();
     }
+  }
+
+  private int calculateWaveModifier(int initialValue) {
+    return (int) (initialValue * (1 + waveNumber / 4f));
+  }
+
+  private int calculateWaveEnemies() {
+    return ((waveNumber - 1) % 5) * enemiesPerWave + enemiesPerWave;
   }
 
   /**
@@ -102,8 +117,16 @@ public class Spawner {
     return spawnedEnemies.isEmpty();
   }
 
+  public int getWaveNumber() {
+    return waveNumber;
+  }
+
   public ArrayList<Enemy> getEnemies() {
     return spawnedEnemies;
+  }
+
+  public boolean isGameOver() {
+    return gameOver;
   }
 
   /**
@@ -112,6 +135,9 @@ public class Spawner {
   public void render() {
     for (Enemy enemy : spawnedEnemies) {
       if (enemy.isDead()) {
+        if (enemy.hasReachedEnd()) {
+          gameOver = true;
+        }
         deadEnemies.add(enemy);
       } else {
         enemy.render();
@@ -119,7 +145,7 @@ public class Spawner {
     }
     spawnedEnemies.removeAll(deadEnemies);
     deadEnemies.clear();
-    
+
     font.draw(GameApp.getSpritebatch(), "Wave: " + waveNumber, 10, 40);
   }
 
@@ -133,5 +159,9 @@ public class Spawner {
       instance = new Spawner();
     }
     return instance;
+  }
+
+  public static void clear() {
+    instance = null;
   }
 }
