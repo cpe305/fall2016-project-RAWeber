@@ -151,4 +151,8 @@ public class MapGrid extends Grid {
     }
     return instance;
   }
+  
+  public static void clear() {
+    instance = null;
+  }
 }

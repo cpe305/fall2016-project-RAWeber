@@ -63,7 +63,7 @@ public class Tower {
    * @param upgrade1 First upgrade for tower
    * @param upgrade2 Second upgrade for tower
    */
-  public Tower(String name, int cost, Vector2 postion, TowerAttack attack, TowerUpgrade upgrade1,
+  public Tower(String name, int cost, Vector2 position, TowerAttack attack, TowerUpgrade upgrade1,
       TowerUpgrade upgrade2) {
     this.name = name;
     this.cost = cost;
@@ -73,11 +73,8 @@ public class Tower {
     this.upgrade2 = upgrade2;
   }
 
-  /**
-   * Damage the towers targets.
-   */
-  public void attackTargets() {
-    attack.attackTargets(
+  private boolean attackTargets() {
+    return attack.attackTargets(
         new Vector2(position.x + GridSquare.SIZE / 2, position.y + GridSquare.SIZE / 2));
   }
 
@@ -125,8 +122,8 @@ public class Tower {
   public void render() {
     GameApp.getSpritebatch().draw(sprite, position.x, position.y, GridSquare.SIZE, GridSquare.SIZE);
     if (active) {
-      if (currTime + attack.getAttackDelay() < System.currentTimeMillis()) {
-        attackTargets();
+      if (currTime + attack.getAttackDelay() < System.currentTimeMillis() && attackTargets()) {
+
         currTime = System.currentTimeMillis();
       }
       attack.render();

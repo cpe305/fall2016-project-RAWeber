@@ -59,8 +59,8 @@ public class Projectile {
     animation = new Animator("Impact.png", position, 2, 2, 16, false, GridSquare.SIZE / 2,
         GridSquare.SIZE / 2, 0);
   }
-  
-  private void destroyDud(){
+
+  private void destroyDud() {
     impacted = true;
     animation = new Animator("Dud.png", position, 2, 2, 16, false, GridSquare.SIZE / 2,
         GridSquare.SIZE / 2, 0);

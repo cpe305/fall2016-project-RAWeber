@@ -1,11 +1,9 @@
 package com.rawprogramming.games.towers;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.math.Vector2;
-import com.rawprogramming.games.Animator;
 import com.rawprogramming.games.enemies.Enemy;
-import com.rawprogramming.games.grid.GridSquare;
+
+import java.util.ArrayList;
 
 public class AreaAttack extends TowerAttack {
 
@@ -26,7 +24,7 @@ public class AreaAttack extends TowerAttack {
   }
 
   @Override
-  public void attackTargets(Vector2 position) {
+  public boolean attackTargets(Vector2 position) {
     ArrayList<Enemy> tempTargets = findTargetsInRange(position);
     ArrayList<Enemy> targets = findTargets(tempTargets);
     if (!targets.isEmpty()) {
@@ -34,6 +32,7 @@ public class AreaAttack extends TowerAttack {
       explosions.add(explosion);
       explosion.explode(targets);
     }
+    return !targets.isEmpty();
   }
 
   @Override

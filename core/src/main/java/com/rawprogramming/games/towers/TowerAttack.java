@@ -38,7 +38,7 @@ public abstract class TowerAttack {
 
   protected abstract ArrayList<Enemy> findTargets(ArrayList<Enemy> tempTargets);
 
-  public abstract void attackTargets(Vector2 position);
+  public abstract boolean attackTargets(Vector2 position);
 
   public abstract void render();
 

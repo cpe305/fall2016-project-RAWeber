@@ -1,6 +1,7 @@
 package com.rawprogramming.games.grid;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.towers.TowerStore;
 
@@ -11,6 +12,8 @@ import com.rawprogramming.games.towers.TowerStore;
  *
  */
 public class StoreGrid extends Grid {
+
+  private BitmapFont font;
 
   /**
    * Constructor for StoreGrid.
@@ -25,6 +28,7 @@ public class StoreGrid extends Grid {
     this.rows = rows;
     this.cols = cols;
 
+    font = new BitmapFont(true);
     gridMap = new GridSquare[rows][cols];
 
     for (int row = 0; row < rows; row++) {
@@ -67,8 +71,10 @@ public class StoreGrid extends Grid {
         }
         GameApp.getSpritebatch().draw(square.getTile(), square.getCoordX(), square.getCoordY(),
             GridSquare.SIZE, GridSquare.SIZE);
-        ((TowerSquare) square).getTower().setPosition(square.getPosition());
+        square.getTower().setPosition(square.getPosition());
         square.getTower().render();
+        font.draw(GameApp.getSpritebatch(), Integer.toString(square.getTower().getCost()),
+            square.getCoordX(), square.getCoordY() + GridSquare.SIZE * 3 / 4);
       }
     }
     GameApp.getSpritebatch().setColor(1, 1, 1, 1);

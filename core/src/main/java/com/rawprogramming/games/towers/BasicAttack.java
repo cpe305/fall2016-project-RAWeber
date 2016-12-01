@@ -24,13 +24,15 @@ public class BasicAttack extends TowerAttack {
   }
 
   @Override
-  public void attackTargets(Vector2 position) {
+  public boolean attackTargets(Vector2 position) {
     ArrayList<Enemy> tempTargets = findTargetsInRange(position);
     ArrayList<Enemy> targets = findTargets(tempTargets);
 
     for (Enemy enemy : targets) {
       projectiles.add(new Projectile(position, enemy, damage, 2, 200));
     }
+    
+    return !targets.isEmpty();
   }
 
   @Override

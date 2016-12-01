@@ -1,11 +1,11 @@
 package com.rawprogramming.games.towers;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.math.Vector2;
 import com.rawprogramming.games.Animator;
 import com.rawprogramming.games.enemies.Enemy;
 import com.rawprogramming.games.grid.GridSquare;
+
+import java.util.ArrayList;
 
 public class Explosion {
 
@@ -13,6 +13,12 @@ public class Explosion {
   private Vector2 position;
   private int damage;
 
+  /**
+   * Constructor for the Explosion.
+   * 
+   * @param position Position to explode around
+   * @param damage Damage to deal to targets
+   */
   public Explosion(Vector2 position, int damage) {
     this.position = position;
     this.damage = damage;
@@ -21,6 +27,10 @@ public class Explosion {
         GridSquare.SIZE, 0);
   }
 
+  /**
+   * Damages the explosions targets.
+   * @param targets Enemies to be damaged
+   */
   public void explode(ArrayList<Enemy> targets) {
     for (Enemy enemy : targets) {
       enemy.takeHit(damage);
@@ -31,6 +41,9 @@ public class Explosion {
     return animation.isFinished();
   }
 
+  /**
+   * Renders the explosions around a point.
+   */
   public void render() {
     for (int col = -1; col <= 1; col++) {
       for (int row = -1; row <= 1; row++) {

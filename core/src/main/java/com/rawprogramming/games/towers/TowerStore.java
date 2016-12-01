@@ -3,7 +3,6 @@ package com.rawprogramming.games.towers;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.grid.StoreGrid;
-import com.rawprogramming.games.grid.TowerSquare;
 
 import java.util.ArrayList;
 
@@ -49,8 +48,7 @@ public class TowerStore {
    * @param coordY Y coordinate of tower to select
    */
   public void selectTower(float coordX, float coordY) {
-    TowerSquare square = grid.getTouchedSquare(coordX, coordY);
-    selectedTower = square.getTower();
+    selectedTower = grid.getTouchedSquare(coordX, coordY).getTower();
   }
 
   /**
@@ -72,10 +70,10 @@ public class TowerStore {
    * Generates tower store towers.
    */
   public void generateTowers() {
-    towers.add(new Tower("BasicTower", 50, new BasicAttack(5, 2, 1)));
-    towers.add(new Tower("StrongTower", 100, new BasicAttack(10, 1.5f, 1.5f)));
-    towers.add(new Tower("AreaTower", 100, new AreaAttack(5, 1, 2)));
-    towers.add(new Tower("StrongAreaTower", 250, new AreaAttack(10, 1, 2.5f)));
+    towers.add(new Tower("BasicTower", 50, new BasicAttack(10, 2, 1.5f)));
+    towers.add(new Tower("AreaTower", 150, new AreaAttack(5, 1, 1.5f)));
+    towers.add(new Tower("StrongTower", 200, new BasicAttack(15, 2.5f, 1f)));
+    towers.add(new Tower("StrongAreaTower", 300, new AreaAttack(25, 1.5f, 2.5f)));
 
     for (int i = 0; i < STORE_ROWS; i++) {
       for (int j = 0; j < STORE_COLS; j++) {
@@ -136,5 +134,9 @@ public class TowerStore {
       instance = new TowerStore();
     }
     return instance;
+  }
+  
+  public static void clear() {
+    instance = null;
   }
 }

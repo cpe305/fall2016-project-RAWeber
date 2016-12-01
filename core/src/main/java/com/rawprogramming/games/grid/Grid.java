@@ -1,7 +1,5 @@
 package com.rawprogramming.games.grid;
 
-import com.rawprogramming.games.GameApp;
-
 /**
  * Class representing grid of squares.
  * 
