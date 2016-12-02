@@ -21,6 +21,7 @@ public class GameApp extends Game {
     batch = new SpriteBatch();
     manager.load("TowerTile.png", Texture.class);
     manager.load("PathTile.png", Texture.class);
+    manager.load("EmptyTile.png", Texture.class);
     manager.load("BasicTower.png", Texture.class);
     manager.load("StoreBackground.png", Texture.class);
     manager.load("Projectile.png", Texture.class);
@@ -38,6 +39,7 @@ public class GameApp extends Game {
     manager.load("StartText.png", Texture.class);
     manager.load("StartOverText.png", Texture.class);
     manager.load("GameOverText.png", Texture.class);
+    manager.load("WaveCompleted.png", Texture.class);
     
     this.setScreen(new LoadScreen(this));
   }

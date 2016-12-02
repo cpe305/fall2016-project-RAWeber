@@ -14,7 +14,7 @@ public class Animator {
   private boolean loop;
   private Animation textureAnimation;
   private TextureRegion currentFrame;
-  
+
   private float width;
   private float height;
   private float rotation;
@@ -68,21 +68,8 @@ public class Animator {
   public Animator(String textureName, Vector2 position, int cols, int rows, int frameRate,
       boolean loop, float width, float height, float rotation) {
 
-    Texture textureSheet = GameApp.getAssetManager().get(textureName, Texture.class);
-    TextureRegion[][] tmp = TextureRegion.split(textureSheet, textureSheet.getWidth() / cols,
-        textureSheet.getHeight() / rows);
-    TextureRegion[] frames = new TextureRegion[cols * rows];
-    int index = 0;
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        frames[index++] = tmp[i][j];
-      }
-    }
+    this(textureName, position, cols, rows, frameRate, loop);
 
-    this.textureAnimation = new Animation(1.0f / frameRate, frames);
-    this.position = position;
-    this.stateTime = 0;
-    this.loop = loop;
     this.width = width;
     this.height = height;
     this.rotation = rotation;
@@ -91,7 +78,7 @@ public class Animator {
   public void setPosition(Vector2 position) {
     this.position = position;
   }
-  
+
   public void setRotation(float rotation) {
     this.rotation = rotation;
   }
@@ -100,13 +87,17 @@ public class Animator {
     return textureAnimation.isAnimationFinished(stateTime);
   }
 
+  public void reset() {
+    stateTime = 0;
+  }
+
   /**
    * Renders the animation.
    */
   public void render() {
     stateTime += Gdx.graphics.getDeltaTime();
     currentFrame = textureAnimation.getKeyFrame(stateTime, loop);
-    GameApp.getSpritebatch().draw(currentFrame, position.x, position.y, width / 2.0f,
-        height / 2.0f, width, height, 1, 1, rotation);
+    GameApp.getSpritebatch().draw(currentFrame, position.x, position.y, width / 2.0f, height / 2.0f,
+        width, height, 1, 1, rotation);
   }
 }
