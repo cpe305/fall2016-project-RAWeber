@@ -116,7 +116,7 @@ public class Spawner {
   }
 
   private int calculateWaveModifier(int initialValue) {
-    return (int) (initialValue * (waveNumber + 1) / 2f);
+    return (int) (initialValue * (Math.pow(1.4, waveNumber - 1)));
   }
 
   private int calculateWaveEnemies() {
