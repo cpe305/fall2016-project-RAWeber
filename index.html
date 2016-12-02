@@ -1,48 +1,34 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Tower Defense : fall2016-project-RAWeber created by GitHub Classroom">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Tower Defense</title>
+    <meta charset="UTF-8">
+    <title>Tower Defense by cpe305</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
+    <section class="page-header">
+      <h1 class="project-name">Tower Defense</h1>
+      <h2 class="project-tagline">fall2016-project-RAWeber created by GitHub Classroom</h2>
+      <a href="https://github.com/cpe305/fall2016-project-RAWeber" class="btn">View on GitHub</a>
+      <a href="https://github.com/cpe305/fall2016-project-RAWeber/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/cpe305/fall2016-project-RAWeber/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/cpe305/fall2016-project-RAWeber">View on GitHub</a>
-
-          <h1 id="project_title">Tower Defense</h1>
-          <h2 id="project_tagline">fall2016-project-RAWeber created by GitHub Classroom</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/cpe305/fall2016-project-RAWeber/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/cpe305/fall2016-project-RAWeber/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
+    <section class="main-content">
+      <h1>
 <a id="tower-defense-game-" class="anchor" href="#tower-defense-game-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tower Defense Game <a href="https://travis-ci.org/cpe305/fall2016-project-RAWeber"><img src="https://travis-ci.org/cpe305/fall2016-project-RAWeber.svg?branch=master" alt="Build Status"></a>
 </h1>
 
-<p>For my CPE-305 class I created a tower defense game.
-The game was created using libgdx and is supported on desktop and android.
-The game involves players placing towers on a grid in order to defeat waves of oncoming enemies.</p>
+<p>This project consists of a Tower Defense game. The game was created using libgdx and is supported on desktop and android. The game involves players placing towers on a grid in order to defeat waves of oncoming enemies.</p>
 
 <p><img src="https://github.com/cpe305/fall2016-project-RAWeber/blob/master/images/TowerStore.png?raw=true" alt=""></p>
 
 <h2>
-<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h2>
+<a id="main-features" class="anchor" href="#main-features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Main Features</h2>
 
 <ul>
 <li>Grid System
@@ -65,16 +51,23 @@ The game involves players placing towers on a grid in order to defeat waves of o
 <ul>
 <li>3 different enemies</li>
 <li>Random enemy spawner</li>
-<li>Enemy Factory</li>
 </ul>
 </li>
 </ul>
 
 <h2>
-<a id="design-patterns" class="anchor" href="#design-patterns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design Patterns</h2>
+<a id="main-design-patterns" class="anchor" href="#main-design-patterns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Main Design Patterns</h2>
 
 <ul>
+<li>Strategy Pattern<br>
+Using this pattern allowed me to interchange tower attacks, allowing easy creation of new towers. Additionally this allows for easy extension of the tower logic, as towers will be able to function with new attack types.
+
+<ul>
+<li>TowerAttack</li>
+</ul>
+</li>
 <li>Singleton Pattern
+Using this pattern ensured that only one instance of key components was present at any time. This pattern also allowed easy access to the main components without the need to pass references among components
 
 <ul>
 <li>MapGrid</li>
@@ -82,35 +75,26 @@ The game involves players placing towers on a grid in order to defeat waves of o
 <li>TowerStore</li>
 </ul>
 </li>
-<li>Strategy Pattern
-
-<ul>
-<li>TowerAttack</li>
-</ul>
-</li>
-<li>Factory Pattern
-
-<ul>
-<li>EnemyFactory</li>
-</ul>
-</li>
 </ul>
 
-<p><strong>Support of Contact</strong><br>
+<h2>
+<a id="what-i-liked-about-my-design" class="anchor" href="#what-i-liked-about-my-design" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What I Liked About My Design</h2>
+
+<h2>
+<a id="key-takeaway-from-project" class="anchor" href="#key-takeaway-from-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Key Takeaway From Project</h2>
+
+<p><strong>Support or Contact</strong><br>
 <a href="https://github.com/RAWeber" class="user-mention">@RAWeber</a><br>
 <a href="mailto:RAWeber95@gmail.com">RAWeber95@gmail.com</a></p>
-      </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Tower Defense maintained by <a href="https://github.com/cpe305">cpe305</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/cpe305/fall2016-project-RAWeber">Tower Defense</a> is maintained by <a href="https://github.com/cpe305">cpe305</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
 
-    
+    </section>
 
+  
   </body>
 </html>
