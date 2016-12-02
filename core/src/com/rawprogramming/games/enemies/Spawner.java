@@ -1,14 +1,17 @@
 package com.rawprogramming.games.enemies;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.rawprogramming.games.GameApp;
-import com.rawprogramming.games.grid.MapGrid;
-import com.rawprogramming.games.grid.PathSquare;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Vector2;
+import com.rawprogramming.games.Animator;
+import com.rawprogramming.games.GameApp;
+import com.rawprogramming.games.grid.MapGrid;
+import com.rawprogramming.games.grid.PathSquare;
 
 /**
  * Class to spawn enemies.
@@ -33,6 +36,7 @@ public class Spawner {
 
   private Timer timer;
   private BitmapFont font;
+  private Animator waveCompleteAnim;
 
   private Spawner() {
     this.waveNumber = 0;
@@ -49,6 +53,11 @@ public class Spawner {
 
     this.font = new BitmapFont(true);
     this.font.getData().setScale(1.5f);
+    Texture waveCompleted = GameApp.getAssetManager().get("WaveCompleted.png", Texture.class);
+    int waveWidth = waveCompleted.getWidth() / 2;
+    int waveHeight = waveCompleted.getHeight() / 16;
+    waveCompleteAnim = new Animator("WaveCompleted.png", new Vector2(480 - waveWidth / 2, 0), 1, 8, 6, false, waveWidth,
+        waveHeight, 180);
   }
 
 
@@ -75,6 +84,7 @@ public class Spawner {
   private void stopWave() {
     timer.cancel();
     this.enemyCounter = 0;
+    waveCompleteAnim.reset();
   }
 
   /**
@@ -146,7 +156,10 @@ public class Spawner {
     spawnedEnemies.removeAll(deadEnemies);
     deadEnemies.clear();
 
-    font.draw(GameApp.getSpritebatch(), "Wave: " + waveNumber, 10, 40);
+    font.draw(GameApp.getSpritebatch(), "Wave: " + waveNumber, 840, 10);
+    if (!waveCompleteAnim.isFinished() && waveComplete() && waveNumber != 0) {
+      waveCompleteAnim.render();
+    }
   }
 
   /**
