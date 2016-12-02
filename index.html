@@ -35,14 +35,12 @@
 <a id="tower-defense-game-" class="anchor" href="#tower-defense-game-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tower Defense Game <a href="https://travis-ci.org/cpe305/fall2016-project-RAWeber"><img src="https://travis-ci.org/cpe305/fall2016-project-RAWeber.svg?branch=master" alt="Build Status"></a>
 </h1>
 
-<p>For my CPE-305 class I created a tower defense game.
-The game was created using libgdx and is supported on desktop and android.
-The game involves players placing towers on a grid in order to defeat waves of oncoming enemies.</p>
+<p>This project consists of a Tower Defense game. The game was created using libgdx and is supported on desktop and android. The game involves players placing towers on a grid in order to defeat waves of oncoming enemies.</p>
 
 <p><img src="https://github.com/cpe305/fall2016-project-RAWeber/blob/master/images/TowerStore.png?raw=true" alt=""></p>
 
 <h2>
-<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h2>
+<a id="main-features" class="anchor" href="#main-features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Main Features</h2>
 
 <ul>
 <li>Grid System
@@ -65,16 +63,29 @@ The game involves players placing towers on a grid in order to defeat waves of o
 <ul>
 <li>3 different enemies</li>
 <li>Random enemy spawner</li>
-<li>Enemy Factory</li>
 </ul>
 </li>
 </ul>
 
 <h2>
-<a id="design-patterns" class="anchor" href="#design-patterns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design Patterns</h2>
+<a id="main-design-patterns" class="anchor" href="#main-design-patterns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Main Design Patterns</h2>
 
 <ul>
+<li>Strategy Pattern<br>
+
+<ul>
+<li>Using this pattern allowed me to interchange tower attacks, allowing easy creation of new towers. Additionally this allows for easy extension of the tower logic, as towers will be able to function with new attack types. This pattern was used in:
+
+<ul>
+<li>TowerAttack</li>
+</ul>
+</li>
+</ul>
+</li>
 <li>Singleton Pattern
+
+<ul>
+<li>Using this pattern ensured that only one instance of key components was present at any time. This pattern also allowed easy access to the main components without the need to pass references among components. This pattern was used in:
 
 <ul>
 <li>MapGrid</li>
@@ -82,21 +93,21 @@ The game involves players placing towers on a grid in order to defeat waves of o
 <li>TowerStore</li>
 </ul>
 </li>
-<li>Strategy Pattern
-
-<ul>
-<li>TowerAttack</li>
-</ul>
-</li>
-<li>Factory Pattern
-
-<ul>
-<li>EnemyFactory</li>
 </ul>
 </li>
 </ul>
 
-<p><strong>Support of Contact</strong><br>
+<h2>
+<a id="what-i-liked-about-my-design" class="anchor" href="#what-i-liked-about-my-design" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What I Liked About My Design</h2>
+
+<p>My favorite aspect of this project's design is the Tower component. Using the strategy pattern to abstract the attack type from the tower not only helped me reaffirm one of the patterns learned in class, but also made this portion of my code easily extendable. While time limited me to how many attacks I could make, I could easily add a new one in the future, while keeping the rest of my code functioning properly.</p>
+
+<h2>
+<a id="key-takeaway-from-project" class="anchor" href="#key-takeaway-from-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Key Takeaway From Project</h2>
+
+<p>Through constant struggles with setting up travisCI and sonarqube with my libGDX/android project, I came to have a strong understanding of how maven, gradle, and sonarqube work. By the end of this project I was directly editing multiple parts of my gradle files in order to trouble shoot problems. While not always successful, I was able to develop a deeper understanding of these tools.</p>
+
+<p><strong>Support or Contact</strong><br>
 <a href="https://github.com/RAWeber" class="user-mention">@RAWeber</a><br>
 <a href="mailto:RAWeber95@gmail.com">RAWeber95@gmail.com</a></p>
       </section>
