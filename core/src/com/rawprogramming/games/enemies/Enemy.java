@@ -109,6 +109,11 @@ public class Enemy {
     return hitBox;
   }
 
+  /**
+   * Checks if enemy has reached the end of the path.
+   * 
+   * @return Whether enemy has reached the end
+   */
   public boolean hasReachedEnd() {
     return reachedEnd;
   }
@@ -144,13 +149,10 @@ public class Enemy {
     distanceTraveled += vector.len();
     position.add(vector);
     hitBox.setPosition(position);
-    if (vector.x > 0 && position.x > destination.getCoordX()) {
-      position = destination.getPosition();
-    } else if (vector.x < 0 && position.x < destination.getCoordX()) {
-      position = destination.getPosition();
-    } else if (vector.y < 0 && position.y < destination.getCoordY()) {
-      position = destination.getPosition();
-    } else if (vector.y > 0 && position.y > destination.getCoordY()) {
+    if ((vector.x > 0 && position.x > destination.getCoordX())
+        || (vector.x < 0 && position.x < destination.getCoordX())
+        || (vector.y < 0 && position.y < destination.getCoordY())
+        || (vector.y > 0 && position.y > destination.getCoordY())) {
       position = destination.getPosition();
     }
   }
