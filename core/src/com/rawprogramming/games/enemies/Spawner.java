@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.rawprogramming.games.Animator;
 import com.rawprogramming.games.GameApp;
@@ -37,6 +38,8 @@ public class Spawner {
   private Timer timer;
   private BitmapFont font;
   private Animator waveCompleteAnim;
+  private Texture sendNextWave;
+  private Rectangle sendWaveButton;
 
   private Spawner() {
     this.waveNumber = 0;
@@ -53,11 +56,13 @@ public class Spawner {
 
     this.font = new BitmapFont(true);
     this.font.getData().setScale(1.5f);
+    sendNextWave = GameApp.getAssetManager().get("SendNextWave.png", Texture.class);
     Texture waveCompleted = GameApp.getAssetManager().get("WaveCompleted.png", Texture.class);
     int waveWidth = waveCompleted.getWidth() / 2;
     int waveHeight = waveCompleted.getHeight() / 16;
     waveCompleteAnim = new Animator("WaveCompleted.png", new Vector2(480 - waveWidth / 2, 0), 1, 8,
         6, false, waveWidth, waveHeight, 180);
+    sendWaveButton = new Rectangle(305, 460, sendNextWave.getWidth(), sendNextWave.getHeight());
   }
 
 
@@ -139,10 +144,18 @@ public class Spawner {
     return gameOver;
   }
 
+  public void checkWaveStart(float x, float y) {
+    if (sendWaveButton.contains(x, y)
+        && (waveCompleteAnim.isFinished() && waveComplete() || waveNumber == 0)) {
+      sendWave();
+    }
+  }
+
   /**
    * Render all enemies that are currently alive.
    */
   public void render() {
+
     for (Enemy enemy : spawnedEnemies) {
       if (enemy.isDead()) {
         if (enemy.hasReachedEnd()) {
@@ -157,8 +170,11 @@ public class Spawner {
     deadEnemies.clear();
 
     font.draw(GameApp.getSpritebatch(), "Wave: " + waveNumber, 840, 10);
+
     if (!waveCompleteAnim.isFinished() && waveComplete() && waveNumber != 0) {
       waveCompleteAnim.render();
+    } else if (waveCompleteAnim.isFinished() && waveComplete() || waveNumber == 0) {
+      GameApp.getSpritebatch().draw(sendNextWave, 305, 460);
     }
   }
 

@@ -39,6 +39,7 @@ public class GameApp extends Game {
     manager.load("StartOverText.png", Texture.class);
     manager.load("GameOverText.png", Texture.class);
     manager.load("WaveCompleted.png", Texture.class);
+    manager.load("SendNextWave.png", Texture.class);
 
     this.setScreen(new LoadScreen(this));
   }
