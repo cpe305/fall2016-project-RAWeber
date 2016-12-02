@@ -71,9 +71,9 @@ public class TowerStore {
    */
   public void generateTowers() {
     towers.add(new Tower("BasicTower", 50, new ProjectileAttack(5, 1.5f, 1f)));
-    towers.add(new Tower("AreaTower", 150, new AreaAttack(5, 1, 1.5f)));
+    towers.add(new Tower("AreaTower", 150, new AreaAttack(5, 1, 1f)));
     towers.add(new Tower("StrongTower", 200, new ProjectileAttack(10, 2, 0.75f)));
-    towers.add(new Tower("StrongAreaTower", 300, new AreaAttack(25, 1.5f, 2.5f)));
+    towers.add(new Tower("StrongAreaTower", 300, new AreaAttack(25, 1.5f, 2f)));
 
     for (int i = 0; i < STORE_ROWS; i++) {
       for (int j = 0; j < STORE_COLS; j++) {

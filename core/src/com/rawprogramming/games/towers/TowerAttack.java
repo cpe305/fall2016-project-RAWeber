@@ -58,7 +58,7 @@ public abstract class TowerAttack {
   public abstract void render();
 
   public int getAttackDelay() {
-    return (int) attackDelay * 1000;
+    return (int) (attackDelay * 1000);
   }
 
   public abstract TowerAttack getCopy();
