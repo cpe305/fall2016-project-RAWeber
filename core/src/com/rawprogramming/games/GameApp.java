@@ -17,8 +17,6 @@ public class GameApp extends Game {
 
   @Override
   public void create() {
-    manager = new AssetManager();
-    batch = new SpriteBatch();
     manager.load("TowerTile.png", Texture.class);
     manager.load("PathTile.png", Texture.class);
     manager.load("EmptyTile.png", Texture.class);
@@ -40,13 +38,8 @@ public class GameApp extends Game {
     manager.load("StartOverText.png", Texture.class);
     manager.load("GameOverText.png", Texture.class);
     manager.load("WaveCompleted.png", Texture.class);
-    
-    this.setScreen(new LoadScreen(this));
-  }
 
-  @Override
-  public void render() {
-    super.render();
+    this.setScreen(new LoadScreen(this));
   }
 
   @Override
@@ -56,10 +49,16 @@ public class GameApp extends Game {
   }
 
   public static SpriteBatch getSpritebatch() {
+    if (batch == null) {
+      batch = new SpriteBatch();
+    }
     return batch;
   }
-  
+
   public static AssetManager getAssetManager() {
+    if (manager == null) {
+      manager = new AssetManager();
+    }
     return manager;
   }
 }

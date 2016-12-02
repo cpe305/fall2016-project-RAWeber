@@ -10,7 +10,13 @@ import com.rawprogramming.games.enemies.Spawner;
 import com.rawprogramming.games.grid.MapGrid;
 import com.rawprogramming.games.towers.TowerStore;
 
-public class GameOverScreen  implements Screen {
+/**
+ * Screen class for game over.
+ * 
+ * @author Robert Weber
+ *
+ */
+public class GameOverScreen implements Screen {
 
   private final GameApp game;
 

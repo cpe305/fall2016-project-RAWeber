@@ -30,6 +30,7 @@ public class Tower {
    * 
    * @param name Name of the tower
    * @param cost Cost of the tower
+   * @param attack Attack tower uses
    */
   public Tower(String name, int cost, TowerAttack attack) {
     this.name = name;
@@ -59,10 +60,12 @@ public class Tower {
    * 
    * @param name Name of tower
    * @param cost Cost of tower
+   * @param position Position of tower
    * @param attack Attack type of tower
    * @param upgrade1 First upgrade for tower
    * @param upgrade2 Second upgrade for tower
    */
+
   public Tower(String name, int cost, Vector2 position, TowerAttack attack, TowerUpgrade upgrade1,
       TowerUpgrade upgrade2) {
     this.name = name;

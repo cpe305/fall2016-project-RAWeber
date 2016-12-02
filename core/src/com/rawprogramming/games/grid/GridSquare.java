@@ -35,7 +35,7 @@ public class GridSquare {
   public Vector2 getCenter() {
     return new Vector2(getCoordX() + SIZE / 2, getCoordY() + SIZE / 2);
   }
-  
+
   public Vector2 getPosition() {
     return new Vector2(getCoordX(), getCoordY());
   }

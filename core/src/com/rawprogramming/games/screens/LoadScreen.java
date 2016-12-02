@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.rawprogramming.games.GameApp;
 
+/**
+ * Screen class used when loading assets.
+ * 
+ * @author Robert Weber
+ *
+ */
 public class LoadScreen implements Screen {
 
   private final GameApp game;
@@ -47,18 +53,18 @@ public class LoadScreen implements Screen {
 
   @Override
   public void render(float delta) {
-    
+
     Gdx.gl.glClearColor(0, 0, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     camera.update();
     GameApp.getSpritebatch().setProjectionMatrix(camera.combined);
-    
+
     GameApp.getSpritebatch().begin();
     font.draw(GameApp.getSpritebatch(), titleText, camera.viewportWidth / 2 - titleWidth / 2,
         camera.viewportHeight / 2 + titleHeight / 2 + 5);
     GameApp.getSpritebatch().end();
-    
+
     if (GameApp.getAssetManager().update()) {
       game.setScreen(new TitleScreen(game));
       dispose();

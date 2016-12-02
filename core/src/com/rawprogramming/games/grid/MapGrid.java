@@ -25,7 +25,7 @@ public class MapGrid extends Grid {
   }
 
   private MapGrid() {
-    super(GridSquare.SIZE /2, GridSquare.SIZE / 2);
+    super(GridSquare.SIZE / 2, GridSquare.SIZE / 2);
     String file = "Level1.level";
 
     try {
@@ -154,7 +154,10 @@ public class MapGrid extends Grid {
     }
     return instance;
   }
-  
+
+  /**
+   * Clears singleton instance for new game.
+   */
   public static void clear() {
     instance = null;
   }

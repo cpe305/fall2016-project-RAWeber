@@ -56,8 +56,8 @@ public class Spawner {
     Texture waveCompleted = GameApp.getAssetManager().get("WaveCompleted.png", Texture.class);
     int waveWidth = waveCompleted.getWidth() / 2;
     int waveHeight = waveCompleted.getHeight() / 16;
-    waveCompleteAnim = new Animator("WaveCompleted.png", new Vector2(480 - waveWidth / 2, 0), 1, 8, 6, false, waveWidth,
-        waveHeight, 180);
+    waveCompleteAnim = new Animator("WaveCompleted.png", new Vector2(480 - waveWidth / 2, 0), 1, 8,
+        6, false, waveWidth, waveHeight, 180);
   }
 
 
@@ -174,6 +174,9 @@ public class Spawner {
     return instance;
   }
 
+  /**
+   * Clears singleton instance for new game.
+   */
   public static void clear() {
     instance = null;
   }

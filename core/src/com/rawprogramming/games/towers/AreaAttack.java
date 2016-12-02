@@ -6,6 +6,12 @@ import com.rawprogramming.games.enemies.Enemy;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Class representing a tower attack that damages enemies around it.
+ * 
+ * @author Robert Weber
+ *
+ */
 public class AreaAttack extends TowerAttack {
 
   private ArrayList<Explosion> explosions;
@@ -42,7 +48,7 @@ public class AreaAttack extends TowerAttack {
   @Override
   public void render() {
     Iterator<Explosion> iter = explosions.iterator();
-    while(iter.hasNext()){
+    while (iter.hasNext()) {
       Explosion explosion = iter.next();
       if (explosion.isFinished()) {
         iter.remove();
@@ -53,7 +59,7 @@ public class AreaAttack extends TowerAttack {
   }
 
   @Override
-  public AreaAttack getCopy(){
+  public AreaAttack getCopy() {
     return new AreaAttack(damage, range, attackDelay);
   }
 }

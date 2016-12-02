@@ -19,6 +19,9 @@ public abstract class Grid {
     this.offsetY = offsetY;
   }
 
+  /**
+   * Method to render the grid.
+   */
   public abstract void render();
 
   /**

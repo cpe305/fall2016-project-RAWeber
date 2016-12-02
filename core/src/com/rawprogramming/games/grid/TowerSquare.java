@@ -42,6 +42,7 @@ public class TowerSquare extends GridSquare {
 
   /**
    * Sets square's tower.
+   * 
    * @param tower Tower to place in square
    */
   public void setTower(Tower tower) {

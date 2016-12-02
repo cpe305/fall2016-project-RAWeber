@@ -6,6 +6,12 @@ import com.rawprogramming.games.enemies.Enemy;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Class represeting a projectile tower attack.
+ * 
+ * @author Robert Weber
+ *
+ */
 public class ProjectileAttack extends TowerAttack {
 
   private ArrayList<Projectile> projectiles;
@@ -30,7 +36,7 @@ public class ProjectileAttack extends TowerAttack {
     for (Enemy enemy : targets) {
       projectiles.add(new Projectile(position, enemy, damage, 2, 200));
     }
-    
+
     return !targets.isEmpty();
   }
 
@@ -52,7 +58,7 @@ public class ProjectileAttack extends TowerAttack {
   @Override
   public void render() {
     Iterator<Projectile> iter = projectiles.iterator();
-    while(iter.hasNext()){
+    while (iter.hasNext()) {
       Projectile projectile = iter.next();
       if (projectile.hasImpacted()) {
         iter.remove();
@@ -61,9 +67,9 @@ public class ProjectileAttack extends TowerAttack {
       }
     }
   }
-  
+
   @Override
-  public TowerAttack getCopy(){
+  public TowerAttack getCopy() {
     return new ProjectileAttack(damage, range, attackDelay);
   }
 }

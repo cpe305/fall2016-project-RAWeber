@@ -6,6 +6,12 @@ import com.rawprogramming.games.enemies.Spawner;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract class representing a towers attack type.
+ * 
+ * @author Robert Weber
+ *
+ */
 public abstract class TowerAttack {
 
   protected int damage;
@@ -38,13 +44,22 @@ public abstract class TowerAttack {
 
   protected abstract ArrayList<Enemy> findTargets(ArrayList<Enemy> tempTargets);
 
+  /**
+   * Attacks targets in range.
+   * 
+   * @param position Position to start attack from
+   * @return Returns whether any enemies were attacked
+   */
   public abstract boolean attackTargets(Vector2 position);
 
+  /**
+   * Renders the attack.
+   */
   public abstract void render();
 
   public int getAttackDelay() {
-    return (int)attackDelay * 1000;
+    return (int) attackDelay * 1000;
   }
-  
+
   public abstract TowerAttack getCopy();
 }

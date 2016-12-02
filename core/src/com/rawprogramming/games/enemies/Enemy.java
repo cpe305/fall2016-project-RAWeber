@@ -18,11 +18,13 @@ public class Enemy {
 
   private String name;
   private int health;
-  private Vector2 position;
-  private Rectangle hitBox;
   private float speed;
   private int reward;
+
+  private Vector2 position;
+  private Rectangle hitBox;
   private int rotation;
+
   private PathSquare destination;
   private boolean isDead;
   private boolean reachedEnd;
@@ -103,12 +105,12 @@ public class Enemy {
     return isDead;
   }
 
-  public boolean hasReachedEnd() {
-    return reachedEnd;
-  }
-
   public Rectangle getHitBox() {
     return hitBox;
+  }
+
+  public boolean hasReachedEnd() {
+    return reachedEnd;
   }
 
   /**
@@ -142,22 +144,14 @@ public class Enemy {
     distanceTraveled += vector.len();
     position.add(vector);
     hitBox.setPosition(position);
-    if (vector.x > 0) {
-      if (position.x > destination.getCoordX()) {
-        position = destination.getPosition();
-      }
-    } else if (vector.x < 0) {
-      if (position.x < destination.getCoordX()) {
-        position = destination.getPosition();
-      }
-    } else if (vector.y < 0) {
-      if (position.y < destination.getCoordY()) {
-        position = destination.getPosition();
-      }
-    } else if (vector.y > 0) {
-      if (position.y > destination.getCoordY()) {
-        position = destination.getPosition();
-      }
+    if (vector.x > 0 && position.x > destination.getCoordX()) {
+      position = destination.getPosition();
+    } else if (vector.x < 0 && position.x < destination.getCoordX()) {
+      position = destination.getPosition();
+    } else if (vector.y < 0 && position.y < destination.getCoordY()) {
+      position = destination.getPosition();
+    } else if (vector.y > 0 && position.y > destination.getCoordY()) {
+      position = destination.getPosition();
     }
   }
 }

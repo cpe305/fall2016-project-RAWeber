@@ -7,6 +7,12 @@ import com.rawprogramming.games.grid.GridSquare;
 
 import java.util.ArrayList;
 
+/**
+ * Class representing an explosion attack.
+ * 
+ * @author Robert Weber
+ *
+ */
 public class Explosion {
 
   private Animator animation;
@@ -29,6 +35,7 @@ public class Explosion {
 
   /**
    * Damages the explosions targets.
+   * 
    * @param targets Enemies to be damaged
    */
   public void explode(ArrayList<Enemy> targets) {

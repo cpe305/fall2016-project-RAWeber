@@ -7,6 +7,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.rawprogramming.games.grid.GridSquare;
 
+/**
+ * Class to animate textures.
+ * 
+ * @author Robert Weber
+ *
+ */
 public class Animator {
 
   private Vector2 position;
@@ -87,6 +93,9 @@ public class Animator {
     return textureAnimation.isAnimationFinished(stateTime);
   }
 
+  /**
+   * Resets the animation.
+   */
   public void reset() {
     stateTime = 0;
   }

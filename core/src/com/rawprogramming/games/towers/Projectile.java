@@ -10,6 +10,12 @@ import com.rawprogramming.games.GameApp;
 import com.rawprogramming.games.enemies.Enemy;
 import com.rawprogramming.games.grid.GridSquare;
 
+/**
+ * Class representing a projectile attack.
+ * 
+ * @author Robert Weber
+ *
+ */
 public class Projectile {
 
   private int damage;
@@ -30,6 +36,7 @@ public class Projectile {
    * @param target Target of projectile
    * @param damage Damage of projectile
    * @param speed Speed of projectile
+   * @param maxDistance Max distance projectile can travel
    */
   public Projectile(Vector2 position, Enemy target, int damage, float speed, float maxDistance) {
     this.position = new Vector2(position);
@@ -66,6 +73,11 @@ public class Projectile {
         GridSquare.SIZE / 2, 0);
   }
 
+  /**
+   * Returns when projectile has finished playing its animation.
+   * 
+   * @return Whether projectile is done with animation
+   */
   public boolean hasImpacted() {
     return impacted && animation != null && animation.isFinished();
   }

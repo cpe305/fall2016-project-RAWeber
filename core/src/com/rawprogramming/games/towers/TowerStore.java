@@ -104,7 +104,7 @@ public class TowerStore {
   public boolean isEnabled() {
     return isEnabled;
   }
-  
+
   public void setEnabled(boolean isEnabled) {
     this.isEnabled = isEnabled;
   }
@@ -135,7 +135,10 @@ public class TowerStore {
     }
     return instance;
   }
-  
+
+  /**
+   * Clears singleton instance for new game.
+   */
   public static void clear() {
     instance = null;
   }
