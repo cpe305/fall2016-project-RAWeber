@@ -20,13 +20,13 @@ https://cpe305.github.io/fall2016-project-RAWeber/
   - Random enemy spawner
 
 ## Main Design Patterns Used
+- Strategy Pattern
+  - TowerAttack
 - Singleton Pattern
   - MapGrid
   - Spawner
   - TowerStore
-- Strategy Pattern
-  - TowerAttack
 
-**Support of Contact**  
+**Support or Contact**  
 @RAWeber  
 RAWeber95@gmail.com
