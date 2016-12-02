@@ -32,8 +32,8 @@ public abstract class Grid {
    * @return Returns whether the grid was touched or not
    */
   public boolean checkTouch(float coordX, float coordY) {
-    return (coordX >= offsetX && coordX <= offsetX + getWidth())
-        && (coordY >= offsetY && coordY <= offsetY + getHeight());
+    return (coordX >= offsetX && coordX < offsetX + getWidth())
+        && (coordY >= offsetY && coordY < offsetY + getHeight());
   }
 
 

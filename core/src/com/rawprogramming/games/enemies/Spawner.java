@@ -156,7 +156,7 @@ public class Spawner {
    */
   public void render() {
 
-    for (Enemy enemy : spawnedEnemies) {
+    for (Enemy enemy : new ArrayList<Enemy>(spawnedEnemies)) {
       if (enemy.isDead()) {
         if (enemy.hasReachedEnd()) {
           gameOver = true;
