@@ -17,6 +17,7 @@ public class GameApp extends Game {
 
   @Override
   public void create() {
+    getAssetManager();
     manager.load("TowerTile.png", Texture.class);
     manager.load("PathTile.png", Texture.class);
     manager.load("EmptyTile.png", Texture.class);
