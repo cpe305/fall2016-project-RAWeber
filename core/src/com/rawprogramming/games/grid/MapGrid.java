@@ -21,11 +21,11 @@ public class MapGrid extends Grid {
   private GridSquare selectedSquare;
 
   private enum SquareType {
-    TOWERSQUARE, PATHSQUARE, SPAWNSQUARE
+    EMPTYSQUARE, TOWERSQUARE, PATHSQUARE, SPAWNSQUARE
   }
 
   private MapGrid() {
-    super(0, 0);
+    super(GridSquare.SIZE /2, GridSquare.SIZE / 2);
     String file = "Level1.level";
 
     try {
@@ -54,6 +54,9 @@ public class MapGrid extends Grid {
 
   private void processSquareType(SquareType type, int row, int col) {
     switch (type) {
+      case EMPTYSQUARE:
+        gridMap[row][col] = new EmptySquare(col, row, this);
+        break;
       case TOWERSQUARE:
         gridMap[row][col] = new TowerSquare(col, row, this);
         break;

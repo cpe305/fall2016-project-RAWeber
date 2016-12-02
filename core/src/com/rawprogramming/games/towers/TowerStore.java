@@ -70,9 +70,9 @@ public class TowerStore {
    * Generates tower store towers.
    */
   public void generateTowers() {
-    towers.add(new Tower("BasicTower", 50, new ProjectileAttack(10, 2, 1.5f)));
+    towers.add(new Tower("BasicTower", 50, new ProjectileAttack(5, 1.5f, 1f)));
     towers.add(new Tower("AreaTower", 150, new AreaAttack(5, 1, 1.5f)));
-    towers.add(new Tower("StrongTower", 200, new ProjectileAttack(15, 2.5f, 1f)));
+    towers.add(new Tower("StrongTower", 200, new ProjectileAttack(10, 2, 0.75f)));
     towers.add(new Tower("StrongAreaTower", 300, new AreaAttack(25, 1.5f, 2.5f)));
 
     for (int i = 0; i < STORE_ROWS; i++) {
@@ -121,7 +121,7 @@ public class TowerStore {
       grid.render();
     }
 
-    font.draw(GameApp.getSpritebatch(), "Money: " + money, 10, 10);
+    font.draw(GameApp.getSpritebatch(), "Money: " + money, 30, 10);
   }
 
   /**
